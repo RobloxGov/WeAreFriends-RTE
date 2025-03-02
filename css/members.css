@@ -55,6 +55,7 @@
 img.img-fluid {
     max-width: 150px;
     padding-right: 20px;
+    height: fit-content;
 }
 
 .mt-3, .my-3 {
