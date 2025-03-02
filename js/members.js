@@ -30,7 +30,10 @@ function renderMembers(membersData) {
                     <div class="info mt-3">
                         <div class="writer mb-3">
                             <span class="date d-inline-block"><b>${name}</b> (${surname ?? ''})</span>
-                            <span class="date d-inline-block"><b>${fromS}</b> (${province})</span>
+                            <span class="date d-inline-block"><b>${fromS}</b> ${province}</span>
+                            <span class="date d-inline-block">วิศวกรรมขนส่งทางราง</span>
+                            <span class="date d-inline-block"><b>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b></span>
+                            <span class="date d-inline-block"><b>TCAS68 - PORTFOLIO</b></span>
                         </div>
                         <a href="${link}" class="d-inline-block mt-3 mb-5">เพิ่มเติม</a>
                     </div>
