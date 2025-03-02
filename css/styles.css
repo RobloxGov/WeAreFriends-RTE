@@ -27,9 +27,9 @@
          font-family: system-ui,sans-serif;
          font-weight: bold;
          text-transform: uppercase;
-         color: #0000;
-         -webkit-text-stroke: 1px #000;
-         background: conic-gradient(#000 0 0) text;
+         color: #fff;
+         -webkit-text-stroke: 1px #fff;
+         background: conic-gradient(#fff 0 0) text;
          animation: l8 2s linear infinite;
        }
        .loader:before {
