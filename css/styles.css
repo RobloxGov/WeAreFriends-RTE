@@ -21,13 +21,14 @@
             z-index: 1001;
             top: 0;
         }
-       .loader {
+       .loader-1 {
          width: fit-content;
          font-size: 40px;
          font-family: system-ui,sans-serif;
          font-weight: bold;
          text-transform: uppercase;
          color: #fff;
+         background: conic-gradient(#fff 0 0) text;
          -webkit-text-stroke: 1px #fff;
          animation: l8 2s linear infinite;
        }
