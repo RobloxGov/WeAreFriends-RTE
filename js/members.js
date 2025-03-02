@@ -2,7 +2,7 @@
 async function fetchMembers() {
     try {
         // ดึงข้อมูลจาก API
-        const response = await fetch('https://script.google.com/macros/s/AKfycbyDDltmDH-N1iuJSnnZq_QjuDqWgtRnTGJgoAJYsNmVBlsfTfCiag4xvkx02Ju665RD/exec');
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxwJ8IIJRjWvyQAuvAJ6Qsam6ut_kmLDabLSFS_h7jop4UgfWpEqQQm7fC0mlCow-PZ/exec');
         const data = await response.json();
 
         // ตรวจสอบว่ามีข้อมูลหรือไม่
@@ -22,7 +22,7 @@ function renderMembers(membersData) {
     membersContainer.innerHTML = ''; // ล้างเนื้อหาเก่า
 
     // สร้าง HTML สำหรับแต่ละสมาชิก
-    membersData.forEach(({ link, image, name, surname, fromS, province, round }) => {
+    membersData.forEach(({ link, image, name, surname, fromS, province, round, }) => {
         const membersItem = `
             <div class="col-12">
                 <div class="single-members-item">
@@ -34,6 +34,8 @@ function renderMembers(membersData) {
                             <span class="date d-inline-block"><b>วิศวกรรมศาสตร์</b> วิศวกรรมขนส่งทางราง</span>
                             <span class="date d-inline-block"><b>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b></span>
                             <span class="date d-inline-block"><b>TCAS68 - ${round}</b></span>
+                            <br>
+                            <span class="date d-inline-block"><a href="${link}">${content}</></span>
                         </div>
                     </div>
                 </div>
