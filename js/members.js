@@ -31,7 +31,7 @@ function renderMembers(membersData) {
                         <div class="writer mb-3">
                             <span class="date d-inline-block"><b>${name}</b> (${surname ?? ''})</span>
                             <span class="date d-inline-block"><b>${fromS}</b> ${province}</span>
-                            <span class="date d-inline-block"><b>วิศวกรรมศาสตร์</b>วิศวกรรมขนส่งทางราง</span>
+                            <span class="date d-inline-block"><b>วิศวกรรมศาสตร์</b> วิศวกรรมขนส่งทางราง</span>
                             <span class="date d-inline-block"><b>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b></span>
                             <span class="date d-inline-block"><b>TCAS68 - ${round}</b></span>
                         </div>
