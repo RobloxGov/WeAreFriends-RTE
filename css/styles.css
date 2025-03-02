@@ -1,0 +1,156 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        body {
+            background-color: white;
+            color: #333;
+        }
+        .loader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #F16322;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            z-index: 1001;
+            top: 0;
+        }
+        .hide {
+            display: none;
+        }
+        .header {
+            background: white;
+            color: #F16322;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+        }
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        .nav a {
+            color: #F16322;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 18px;
+            margin: -33px -10px;
+            padding: 19px 10px 16px 10px;
+    		border-bottom: 3px solid transparent;
+            transition:border-color .5s ease;
+        }
+        .nav a:hover {
+    		border-bottom: 3px solid;
+        }
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .nav-menu {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .nav-menu {
+                flex-direction: column;
+                position: absolute;
+                top: 66px;
+                left: 0;
+                background: #ffc199;
+                width: 100%;
+                height: 0;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                opacity: 0;
+                transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            }
+            .nav-menu a {
+                display: block;
+            	color: #F16322;
+                padding: 10px;
+                margin: 0;
+        		width: 90%;
+            }
+            
+            .nav-menu a:first-child {
+                margin-top: 20px;
+            }
+            
+            .nav-menu.show {
+                height: calc(100vh - 66px);
+                opacity: 1;
+        		align-items: center;
+            }
+        }
+        .slider {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slides img {
+            width: 100%;
+            object-fit: cover;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 90;
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        .main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .section {
+            background: #F16322;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .footer {
+            background: #222;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        } 
+        .air-66{
+        	height: 66px;
+        }
