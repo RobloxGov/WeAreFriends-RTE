@@ -35,7 +35,7 @@ function renderMembers(membersData) {
                             <span class="date d-inline-block"><b>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b></span>
                             <span class="date d-inline-block"><b>TCAS68 - ${round}</b></span>
                             <br>
-                            <span class="date d-inline-block"><a href="${link}">${content}</></span>
+                            <span class="date d-inline-block"><a href="${link}">${content}</a></span>
                         </div>
                     </div>
                 </div>
