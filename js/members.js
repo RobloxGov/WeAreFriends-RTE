@@ -22,7 +22,7 @@ function renderMembers(membersData) {
     membersContainer.innerHTML = ''; // ล้างเนื้อหาเก่า
 
     // สร้าง HTML สำหรับแต่ละสมาชิก
-    membersData.forEach(({ link, image, name, surname, fromS, province }) => {
+    membersData.forEach(({ link, image, name, surname, fromS, province, round }) => {
         const membersItem = `
             <div class="col-12">
                 <div class="single-members-item">
@@ -33,7 +33,7 @@ function renderMembers(membersData) {
                             <span class="date d-inline-block"><b>${fromS}</b> ${province}</span>
                             <span class="date d-inline-block">วิศวกรรมขนส่งทางราง</span>
                             <span class="date d-inline-block"><b>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b></span>
-                            <span class="date d-inline-block"><b>TCAS68 - PORTFOLIO</b></span>
+                            <span class="date d-inline-block"><b>TCAS68 - ${round}</b></span>
                         </div>
                     </div>
                 </div>
