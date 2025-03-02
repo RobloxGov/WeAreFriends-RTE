@@ -21,15 +21,15 @@
             z-index: 1001;
             top: 0;
         }
-       .loader-1 {
+       .loader {
          width: fit-content;
          font-size: 40px;
          font-family: system-ui,sans-serif;
          font-weight: bold;
          text-transform: uppercase;
-         color: #fff;
-         background: conic-gradient(#fff 0 0) text;
-         -webkit-text-stroke: 1px #fff;
+         color: #0000;
+         -webkit-text-stroke: 1px #000;
+         background: conic-gradient(#000 0 0) text;
          animation: l8 2s linear infinite;
        }
        .loader:before {
