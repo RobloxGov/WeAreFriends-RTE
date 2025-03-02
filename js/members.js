@@ -26,9 +26,7 @@ function renderMembers(membersData) {
         const membersItem = `
             <div class="col-12">
                 <div class="single-members-item">
-                    <a href="${link}" class="image">
-                        <img fetchpriority="high" decoding="async" src="${image}" alt="" class="img-fluid">
-                    </a>
+                    <img fetchpriority="high" decoding="async" src="${image}" alt="" class="img-fluid">
                     <div class="info mt-3">
                         <div class="writer mb-3">
                             <span class="date d-inline-block"><b>${name}</b> (${surname ?? ''})</span>
