@@ -68,7 +68,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform .2sease-in-out, -webkit-transform .2sease-in-out, -o-transform .2sease-in-out;
+    transition: transform .2s ease-in-out, -webkit-transform .2s ease-in-out, -o-transform .2s ease-in-out;
 }
 img {
     user-select: none;
