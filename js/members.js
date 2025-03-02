@@ -22,7 +22,7 @@ function renderMembers(membersData) {
     membersContainer.innerHTML = ''; // ล้างเนื้อหาเก่า
 
     // สร้าง HTML สำหรับแต่ละสมาชิก
-    membersData.forEach(({ link, image, name, surname, fromS, province, round, }) => {
+    membersData.forEach(({ link, image, name, surname, fromS, province, round,content }) => {
         const membersItem = `
             <div class="col-12">
                 <div class="single-members-item">
