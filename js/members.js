@@ -34,7 +34,6 @@ function renderMembers(membersData) {
                             <span class="date d-inline-block"><b>วิศวกรรมศาสตร์</b> วิศวกรรมขนส่งทางราง</span>
                             <span class="date d-inline-block"><b>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b></span>
                             <span class="date d-inline-block"><b>TCAS68 - ${round}</b></span>
-                            <span class="date d-inline-block"></span>
                             <span class="date d-inline-block"><a href="${link}">${content}</a></span>
                         </div>
                     </div>
