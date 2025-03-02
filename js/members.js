@@ -22,22 +22,19 @@ function renderMembers(membersData) {
     membersContainer.innerHTML = ''; // ล้างเนื้อหาเก่า
 
     // สร้าง HTML สำหรับแต่ละข่าว
-    membersData.forEach(({ link, img, datePost, details }) => {
+    membersData.forEach(({ link, image, name, fromS, province}) => {
         const membersItem = `
             <div class="col-4">
                 <div class="single-members-item">
                     <a href="${link}" class="image">
-                        <img fetchpriority="high" decoding="async" src="${img}" alt="" class="img-fluid">
+                        <img fetchpriority="high" decoding="async" src="${image}" alt="" class="img-fluid">
                     </a>
                     <div class="info mt-3">
                         <div class="writer mb-3">
-                            <span class="date d-inline-block">${datePost}</span>
-                            <a href="${link}" class="author d-inline-block">โดย NaphatDev</a>
+                            <span class="date d-inline-block"><b>${name}</b> (${surname})</span>
+                            <span class="date d-inline-block"><b>${fromS}</b> (${province})</span>
                         </div>
-                        <h5>
-                            <a href="${link}">${details}</a>
-                        </h5>
-                        <a href="${link}" class="d-inline-block mt-3 mb-5">อ่านต่อ</a>
+                        <a href="${link}" class="d-inline-block mt-3 mb-5">เพิ่มเติม</a>
                     </div>
                 </div>
             </div>`;
