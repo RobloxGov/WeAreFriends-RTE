@@ -33,7 +33,7 @@
          animation: l8 2s linear infinite;
        }
        .loader:before {
-         content: "Loading";
+         content: "RTE KMITL";
        }
        @keyframes l8 {
          0%,2%,8%,11%,15%,21%,30%,32%,35%,40%,46%,47%,53%,61%,70%,72%,77%,80%,86%   {background-size: 0    0   }
