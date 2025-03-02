@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We are friends | RTE , KMITL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="loader" id="loader">กำลังโหลด...</div>
+    
+    <header class="header">
+        <div class="logo">
+        	<img src="/img/kmitl.png"> | <img src="/img/rte.png">
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <nav class="nav nav-menu">
+            <a href="#">หน้าแรก</a>
+            <a href="#about">เกี่ยวกับ</a>
+            <a href="#contact">ติดต่อ</a>
+        </nav>
+    </header>
+    
+    <div class="air-66"></div>
+    
+    <div class="slider">
+        <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
+        <div class="slides">
+            <img src="https://th-pfp.pages.dev/img/slider/test1.png" alt="Slide 1">
+            <img src="https://th-pfp.pages.dev/img/slider/test2.png" alt="Slide 2">
+            <img src="https://th-pfp.pages.dev/img/slider/test3.png" alt="Slide 3">
+        </div>
+        <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
+    </div>
+    
+    <main class="main">
+        <h1>ยินดีต้อนรับสู่ We are friends RTE , KMITL</h1>
+        <p>เราคือกลุ่มเพื่อนที่พร้อมจะเดินไปด้วยกัน</p>
+    </main>
+    
+    <section class="section" id="about">
+        <h2>เกี่ยวกับเรา</h2>
+        <p>เราคือกลุ่มเพื่อนจาก RTE และ KMITL ที่มีเป้าหมายร่วมกันในการพัฒนาและสร้างสรรค์สิ่งดี ๆ เพื่ออนาคต</p>
+    </section>
+    
+    <footer class="footer">
+        &copy; 2025 We are friends RTE, KMITL | All Rights Reserved
+    </footer>
+    
+    <script>
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById("loader").classList.add("hide");
+            }, 1500);
+        };
+        function toggleMenu() {
+            const menu = document.querySelector(".nav-menu");
+            const burger = document.querySelector(".hamburger");
+            menu.classList.toggle("show");
+            burger.textContent = menu.classList.contains("show") ? "✖" : "☰";
+        }
+        let index = 0;
+        function showSlide(n) {
+            const slides = document.querySelector(".slides");
+            const totalSlides = slides.children.length;
+            index = (n + totalSlides) % totalSlides;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+        }
+        function prevSlide() { showSlide(index - 1); }
+        function nextSlide() { showSlide(index + 1); }
+        setInterval(() => nextSlide(), 3000);
+    </script>
+</body>
+</html>
