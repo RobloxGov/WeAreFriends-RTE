@@ -6,23 +6,23 @@ async function fetchMembers() {
         const data = await response.json();
 
         // ตรวจสอบว่ามีข้อมูลหรือไม่
-        if (data.length > 0) {
+        if (Array.isArray(data) && data.length > 0) {
             renderMembers(data); // เรียกฟังก์ชันแสดงข้อมูล
         } else {
-            console.error('ไม่มีข้อมูลข่าว');
+            console.error('ไม่มีข้อมูลสมาชิก');
         }
     } catch (error) {
         console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
     }
 }
 
-// ฟังก์ชันแสดงข้อมูลข่าวในหน้าเว็บ
+// ฟังก์ชันแสดงข้อมูลสมาชิกในหน้าเว็บ
 function renderMembers(membersData) {
     const membersContainer = document.getElementById('members'); // ค้นหา element id="members"
     membersContainer.innerHTML = ''; // ล้างเนื้อหาเก่า
 
-    // สร้าง HTML สำหรับแต่ละข่าว
-    membersData.forEach(({ link, image, name, fromS, province}) => {
+    // สร้าง HTML สำหรับแต่ละสมาชิก
+    membersData.forEach(({ link, image, name, surname, fromS, province }) => {
         const membersItem = `
             <div class="col-4">
                 <div class="single-members-item">
@@ -31,7 +31,7 @@ function renderMembers(membersData) {
                     </a>
                     <div class="info mt-3">
                         <div class="writer mb-3">
-                            <span class="date d-inline-block"><b>${name}</b> (${surname})</span>
+                            <span class="date d-inline-block"><b>${name}</b> (${surname ?? ''})</span>
                             <span class="date d-inline-block"><b>${fromS}</b> (${province})</span>
                         </div>
                         <a href="${link}" class="d-inline-block mt-3 mb-5">เพิ่มเติม</a>
