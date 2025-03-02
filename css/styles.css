@@ -29,7 +29,6 @@
          text-transform: uppercase;
          color: #fff;
          -webkit-text-stroke: 1px #fff;
-         background: conic-gradient(#F16322 0 0) text;
          animation: l8 2s linear infinite;
        }
        .loader:before {
