@@ -129,3 +129,7 @@ a.d-inline-block.mt-3.mb-5 {
     font-weight: 900;
     margin-left: 5px;
 }
+
+span.date.d-inline-block a {
+    color: #0a0053;
+}
