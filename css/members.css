@@ -122,3 +122,10 @@ a {
 a.d-inline-block.mt-3.mb-5 {
     color: #fff;
 }
+
+.date.d-inline-block a::after {
+    content: "\f14d";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-left: 5px;
+}
