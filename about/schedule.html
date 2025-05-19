@@ -196,5 +196,18 @@
     // โหลดเริ่มต้น
     fetchData(document.getElementById('type').value);
   </script>
+    <script>
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById("loader").classList.add("hide");
+            }, 1500);
+        };
+        function toggleMenu() {
+            const menu = document.querySelector(".nav-menu");
+            const burger = document.querySelector(".hamburger");
+            menu.classList.toggle("show");
+            burger.textContent = menu.classList.contains("show") ? "✖" : "☰";
+        }
+    </script>
 </body>
 </html>
