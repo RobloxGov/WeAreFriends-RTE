@@ -88,29 +88,35 @@
 
     function parseThaiDate(str) {
       if (!str || typeof str !== "string" || str.includes("นอกตาราง")) {
-        return new Date(9999, 0, 1); // ส่งไปท้ายสุด
+        return new Date(9999, 0, 1);
       }
-
+    
       try {
         const months = {
           "มกราคม": 0, "กุมภาพันธ์": 1, "มีนาคม": 2, "เมษายน": 3,
           "พฤษภาคม": 4, "มิถุนายน": 5, "กรกฎาคม": 6, "สิงหาคม": 7,
           "กันยายน": 8, "ตุลาคม": 9, "พฤศจิกายน": 10, "ธันวาคม": 11
         };
-
-        // ตัวอย่าง: พุธ 2 กรกฎาคม 2568 13:00 - 16:00
-        const parts = str.split(" ");
+    
+        const parts = str.trim().split(" ");
         const day = parseInt(parts[1]);
-        const month = months[parts[2]];
+        const rawMonth = parts[2].replace(/[^ก-๙]/g, "");
+        const month = months[rawMonth];
         const year = parseInt(parts[3]) - 543;
-        const time = parts[4];
-        const [hour, minute] = time.split(":").map(Number);
-
+    
+        const [hour, minute] = parts[4].split(":").map(Number);
+    
+        if (isNaN(day) || isNaN(month) || isNaN(year) || isNaN(hour)) {
+          return new Date(9999, 0, 1);
+        }
+    
         return new Date(year, month, day, hour, minute);
       } catch (e) {
         return new Date(9999, 0, 1);
       }
     }
+
+
 
     fetchData();
   </script>
