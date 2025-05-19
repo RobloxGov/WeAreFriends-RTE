@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>ตารางเรียนและสอบ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    select, table {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2>📅 ตารางเรียนและสอบ 1/2568</h2>
+
+  <label for="typeSelect">เลือกประเภท:</label>
+  <select id="typeSelect">
+    <option value="เรียน 1/2568">ตารางเรียน</option>
+    <option value="สอบ 1/2568">ตารางสอบ</option>
+  </select>
+
+  <div id="tableContainer"></div>
+
+  <script>
+    const URL = "https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec";
+
+    document.getElementById("typeSelect").addEventListener("change", renderTable);
+
+    let allData = null;
+
+    async function fetchData() {
+      const res = await fetch(URL);
+      const json = await res.json();
+      allData = json;
+      renderTable();
+    }
+
+    function renderTable() {
+      if (!allData) return;
+
+      const type = document.getElementById("typeSelect").value;
+      const rows = allData[type] || [];
+
+      // จัดเรียงตามวันเวลา
+      rows.sort((a, b) => {
+        const dateA = parseThaiDate(a["วัน-เวลาเรียน"] || a["วัน-เวลาสอบ"]);
+        const dateB = parseThaiDate(b["วัน-เวลาเรียน"] || b["วัน-เวลาสอบ"]);
+        return dateA - dateB;
+      });
+
+      const container = document.getElementById("tableContainer");
+      if (rows.length === 0) {
+        container.innerHTML = "<p>ไม่มีข้อมูล</p>";
+        return;
+      }
+
+      // สร้างหัวตารางอัตโนมัติ
+      const headers = Object.keys(rows[0]);
+      let html = "<table><thead><tr>";
+      headers.forEach(h => html += `<th>${h}</th>`);
+      html += "</tr></thead><tbody>";
+
+      rows.forEach(row => {
+        html += "<tr>";
+        headers.forEach(h => html += `<td>${row[h] ?? ""}</td>`);
+        html += "</tr>";
+      });
+
+      html += "</tbody></table>";
+      container.innerHTML = html;
+    }
+
+    function parseThaiDate(str) {
+      if (!str || typeof str !== "string" || str.includes("นอกตาราง")) {
+        return new Date(9999, 0, 1); // ส่งไปท้ายสุด
+      }
+
+      try {
+        const months = {
+          "มกราคม": 0, "กุมภาพันธ์": 1, "มีนาคม": 2, "เมษายน": 3,
+          "พฤษภาคม": 4, "มิถุนายน": 5, "กรกฎาคม": 6, "สิงหาคม": 7,
+          "กันยายน": 8, "ตุลาคม": 9, "พฤศจิกายน": 10, "ธันวาคม": 11
+        };
+
+        // ตัวอย่าง: พุธ 2 กรกฎาคม 2568 13:00 - 16:00
+        const parts = str.split(" ");
+        const day = parseInt(parts[1]);
+        const month = months[parts[2]];
+        const year = parseInt(parts[3]) - 543;
+        const time = parts[4];
+        const [hour, minute] = time.split(":").map(Number);
+
+        return new Date(year, month, day, hour, minute);
+      } catch (e) {
+        return new Date(9999, 0, 1);
+      }
+    }
+
+    fetchData();
+  </script>
+</body>
+</html>
