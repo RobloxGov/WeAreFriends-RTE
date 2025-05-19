@@ -31,10 +31,20 @@
             font-size: 16px;
         }
 
-        .table {
-            width: 100px;
-            overflow-x: auto;
+        .scroll-wrapper {
+          overflow-x: auto;
+          overflow-y: hidden;
         }
+    
+        .scroll-sync {
+          height: 1px;
+        }
+    
+        .table-wrapper {
+          overflow-x: auto;
+          max-width: 100%;
+        }
+
 
         table {
             border-collapse: collapse;
@@ -63,10 +73,33 @@
   </select>
 
   <button id="sortByMonth">🔁 เรียงตามเดือน</button>
-
-  <div class="table">
-      <table id="data-table"></table>
+    
+  <div class="scroll-wrapper" id="top-scroll">
+    <div class="scroll-sync" style="width: 2000px;"></div> <!-- กำหนดความกว้างให้ตรงกับ table -->
   </div>
+    
+  <div class="table-wrapper" id="bottom-scroll">
+      <table id="data-table main-table"></table>
+  </div>
+
+  <script>
+    const topScroll = document.getElementById('top-scroll');
+    const bottomScroll = document.getElementById('bottom-scroll');
+
+    topScroll.addEventListener('scroll', () => {
+      bottomScroll.scrollLeft = topScroll.scrollLeft;
+    });
+
+    bottomScroll.addEventListener('scroll', () => {
+      topScroll.scrollLeft = bottomScroll.scrollLeft;
+    });
+
+    // ปรับความกว้าง scroll-sync ให้ตรงกับความกว้าง table จริง
+    const sync = document.querySelector('.scroll-sync');
+    const table = document.getElementById('main-table');
+    sync.style.width = table.scrollWidth + 'px';
+  </script>
+  
   <script>
     const apiUrl = 'https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec';
 
