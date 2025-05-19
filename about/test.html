@@ -20,64 +20,64 @@
 
   <div id="tableContainer"></div>
 
-  <script>
-    const url = 'https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec';
+<script>
+  const url = 'https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec';
 
-    async function loadData() {
-      const res = await fetch(url);
-      const data = await res.json();
+  async function loadData() {
+    const res = await fetch(url);
+    const data = await res.json();
 
-      const select = document.getElementById('typeSelect');
-      select.addEventListener('change', () => renderTable(data, select.value));
+    const select = document.getElementById('typeSelect');
+    select.addEventListener('change', () => renderTable(data, select.value));
 
-      renderTable(data, select.value);
+    renderTable(data, select.value);
+  }
+
+  function parseDate(item) {
+    const monthMap = {
+      'มกราคม': 0, 'กุมภาพันธ์': 1, 'มีนาคม': 2, 'เมษายน': 3,
+      'พฤษภาคม': 4, 'มิถุนายน': 5, 'กรกฎาคม': 6, 'สิงหาคม': 7,
+      'กันยายน': 8, 'ตุลาคม': 9, 'พฤศจิกายน': 10, 'ธันวาคม': 11
+    };
+    const year = item.ปี - 543;
+    const month = monthMap[item.เดือน];
+    const day = item.วันที่;
+    const [hour, minute] = String(item["เวลาเริ่ม"] || "0:00").split(":").map(Number);
+    return new Date(year, month, day, hour, minute);
+  }
+
+  function renderTable(data, type) {
+    const container = document.getElementById('tableContainer');
+    const items = [...data[type] || []];
+
+    // เรียงข้อมูลตามวันและเวลาเริ่ม
+    items.sort((a, b) => parseDate(a) - parseDate(b));
+
+    if (items.length === 0) {
+      container.innerHTML = "<p>ไม่มีข้อมูล</p>";
+      return;
     }
 
-    function parseDate(item) {
-      const monthMap = {
-        'มกราคม': 0, 'กุมภาพันธ์': 1, 'มีนาคม': 2, 'เมษายน': 3,
-        'พฤษภาคม': 4, 'มิถุนายน': 5, 'กรกฎาคม': 6, 'สิงหาคม': 7,
-        'กันยายน': 8, 'ตุลาคม': 9, 'พฤศจิกายน': 10, 'ธันวาคม': 11
-      };
-      const year = item.ปี - 543;
-      const month = monthMap[item.เดือน];
-      const day = item.วันที่;
-      const [hour, minute] = item["เวลาเริ่ม"].split(":").map(Number);
-      return new Date(year, month, day, hour, minute);
-    }
+    const headers = Object.keys(items[0]);
 
-    function renderTable(data, type) {
-      const container = document.getElementById('tableContainer');
-      const items = [...data[type]];
+    const tableHTML = `
+      <table>
+        <thead>
+          <tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>
+        </thead>
+        <tbody>
+          ${items.map(row => `
+            <tr>${headers.map(h => `<td>${String(row[h] ?? '').replace(/\r?\n/g, "<br>")}</td>`).join('')}</tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
 
-      // เรียงลำดับตามวัน/เดือน/ปี และเวลาเริ่ม
-      items.sort((a, b) => parseDate(a) - parseDate(b));
+    container.innerHTML = tableHTML;
+  }
 
-      if (items.length === 0) {
-        container.innerHTML = "<p>ไม่มีข้อมูล</p>";
-        return;
-      }
+  loadData();
+</script>
 
-      // สร้างหัวตารางจากคีย์
-      const headers = Object.keys(items[0]);
-
-      const tableHTML = `
-        <table>
-          <thead>
-            <tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>
-          </thead>
-          <tbody>
-            ${items.map(row => `
-              <tr>${headers.map(h => `<td>${(row[h] || '').replace(/\r?\n/g, "<br>")}</td>`).join('')}</tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-
-      container.innerHTML = tableHTML;
-    }
-
-    loadData();
-  </script>
 </body>
 </html>
