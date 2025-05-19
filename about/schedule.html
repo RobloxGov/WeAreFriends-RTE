@@ -6,30 +6,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: 'Kanit', sans-serif;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
         
-      select, table {
-        margin-top: 20px;
-        font-size: 16px;
-      }
+        body {
+            overflow-x: hidden;
+        }
         
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #ffd8bf;
-      }
+        select#type {
+            width: 100%;
+        }
+
+        button#sortByMonth {
+            display: none;
+        }
+
+        select,
+        table {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .table {
+            width: 100px;
+            overflow-x: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffd8bf;
+        }
     </style>
 </head>
 <body>
@@ -43,8 +64,9 @@
 
   <button id="sortByMonth">🔁 เรียงตามเดือน</button>
 
-  <table id="data-table"></table>
-
+  <div class="table">
+      <table id="data-table"></table>
+  </div>
   <script>
     const apiUrl = 'https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec';
 
