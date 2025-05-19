@@ -62,6 +62,44 @@
         th {
             background-color: #ffd8bf;
         }
+        
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+        
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1320px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -76,7 +114,7 @@
             <a href="/contact/">ติดต่อ</a>
         </nav>
     </header>
-        
+    <main class="container">
       <h1>📘 ตารางเรียนและสอบ</h1>
     
       <label for="type">เลือกประเภท:</label>
@@ -94,7 +132,7 @@
       <div class="table-wrapper" id="bottom-scroll">
           <table id="data-table"></table>
       </div>
-
+    </main>
   <script>
     const topScroll = document.getElementById('top-scroll');
     const bottomScroll = document.getElementById('bottom-scroll');
