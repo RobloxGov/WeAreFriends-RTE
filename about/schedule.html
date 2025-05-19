@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>ตารางเรียนและสอบ</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         * {
@@ -64,23 +65,35 @@
     </style>
 </head>
 <body>
-  <h1>📘 ตารางเรียนและสอบ</h1>
-
-  <label for="type">เลือกประเภท:</label>
-  <select id="type">
-    <option value="เรียน 1/2568">ตารางเรียน</option>
-    <option value="สอบ 1/2568">ตารางสอบ</option>
-  </select>
-
-  <button id="sortByMonth">🔁 เรียงตามเดือน</button>
+    <header class="header">
+        <div class="logo">
+        	<img src="/img/kmitl.svg"> KMITL <img src="/img/rte.webp"> RTE
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <nav class="nav nav-menu">
+            <a href="/">หน้าแรก</a>
+            <a href="">เกี่ยวกับ</a>
+            <a href="/contact/">ติดต่อ</a>
+        </nav>
+    </header>
+        
+      <h1>📘 ตารางเรียนและสอบ</h1>
     
-  <div class="scroll-wrapper" id="top-scroll">
-    <div class="scroll-sync" style="width: 2000px;"></div> <!-- กำหนดความกว้างให้ตรงกับ table -->
-  </div>
+      <label for="type">เลือกประเภท:</label>
+      <select id="type">
+        <option value="เรียน 1/2568">ตารางเรียน</option>
+        <option value="สอบ 1/2568">ตารางสอบ</option>
+      </select>
     
-  <div class="table-wrapper" id="bottom-scroll">
-      <table id="data-table"></table>
-  </div>
+      <button id="sortByMonth">🔁 เรียงตามเดือน</button>
+        
+      <div class="scroll-wrapper" id="top-scroll">
+        <div class="scroll-sync" style="width: 2000px;"></div> <!-- กำหนดความกว้างให้ตรงกับ table -->
+      </div>
+        
+      <div class="table-wrapper" id="bottom-scroll">
+          <table id="data-table"></table>
+      </div>
 
   <script>
     const topScroll = document.getElementById('top-scroll');
