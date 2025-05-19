@@ -114,7 +114,7 @@
             <a href="/contact/">ติดต่อ</a>
         </nav>
     </header>
-    <main class="container">
+    <main class="container" style=" margin-top: 70px; ">
       <h1>📘 ตารางเรียนและสอบ</h1>
     
       <label for="type">เลือกประเภท:</label>
@@ -170,25 +170,29 @@
     function renderTable(data) {
       const table = document.getElementById('data-table');
       table.innerHTML = '';
-
+    
       if (!data || data.length === 0) {
         table.innerHTML = '<tr><td>ไม่มีข้อมูล</td></tr>';
         return;
       }
-
+    
       const headers = Object.keys(data[0])
         .filter(k => k && !["ปี", "เดือน", "วันที่", "วัน", "เวลาเริ่ม", "เวลาสิ้นสุด"].includes(k));
-
+    
       const headerRow = document.createElement('tr');
       headerRow.innerHTML = `<th>วัน-เวลา</th>` + headers.map(h => `<th>${h}</th>`).join('');
       table.appendChild(headerRow);
-
+    
       data.forEach(entry => {
         const row = document.createElement('tr');
         row.innerHTML = `<td>${formatDateString(entry)}</td>` +
           headers.map(h => `<td>${(entry[h] || '').toString().replace(/\n/g, '<br>')}</td>`).join('');
         table.appendChild(row);
       });
+    
+      // 🟢 อัปเดตความกว้าง scroll-sync ให้ตรงกับความกว้างจริงของตาราง
+      const sync = document.querySelector('.scroll-sync');
+      sync.style.width = table.scrollWidth + 'px';
     }
 
     function sortByMonth(data, ascending = true) {
