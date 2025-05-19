@@ -6,17 +6,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-      
       * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
           font-family: 'Kanit', sans-serif;
       }
+        
       select, table {
         margin-top: 20px;
         font-size: 16px;
       }
+        
       table {
         border-collapse: collapse;
         width: 100%;
@@ -27,7 +28,7 @@
         text-align: left;
       }
       th {
-        background-color: #f2f2f2;
+        background-color: #ffd8bf;
       }
     </style>
 </head>
@@ -51,14 +52,14 @@
         };
     
         function toSortableDate(entry) {
-          if (entry["ปี"] && entry["เดือน"] && entry["วันที่"] && entry["เวลาเริ่ม"]) {
-            const year = parseInt(entry["ปี"]) - 543;
-            const month = thaiMonths[entry["เดือน"]];
-            const day = parseInt(entry["วันที่"]);
-            const [hour, minute] = entry["เวลาเริ่ม"].split(":").map(Number);
-            return new Date(year, month, day, hour, minute);
+          if (!entry["ปี"] || !entry["เดือน"] || !entry["วันที่"] || !entry["เวลาเริ่ม"]) {
+            return new Date(9999, 0, 1);
           }
-          return new Date(9999, 0, 1); // สำหรับข้อมูลไม่สมบูรณ์
+          const year = parseInt(entry["ปี"]) - 543;
+          const month = thaiMonths[entry["เดือน"]];
+          const day = parseInt(entry["วันที่"]);
+          const [hour, minute] = entry["เวลาเริ่ม"].split(":").map(Number);
+          return new Date(year, month, day, hour, minute);
         }
     
         function formatDateString(entry) {
@@ -74,13 +75,13 @@
             return;
           }
     
-          // หัวตาราง
-          const headers = Object.keys(data[0]).filter(k => k && k !== "ปี" && k !== "เดือน" && k !== "วันที่" && k !== "วัน" && k !== "เวลาเริ่ม" && k !== "เวลาสิ้นสุด");
+          const headers = Object.keys(data[0])
+            .filter(k => k && !["ปี", "เดือน", "วันที่", "วัน", "เวลาเริ่ม", "เวลาสิ้นสุด"].includes(k));
+    
           const headerRow = document.createElement('tr');
           headerRow.innerHTML = `<th>วัน-เวลา</th>` + headers.map(h => `<th>${h}</th>`).join('');
           table.appendChild(headerRow);
     
-          // ข้อมูล
           data.forEach(entry => {
             const row = document.createElement('tr');
             row.innerHTML = `<td>${formatDateString(entry)}</td>` +
@@ -107,7 +108,6 @@
           fetchData(e.target.value);
         });
     
-        // โหลดข้อมูลครั้งแรก
         fetchData(document.getElementById('type').value);
       </script>
 </body>
