@@ -125,7 +125,7 @@
     
       <button id="sortByMonth">🔁 เรียงตามเดือน</button>
         
-      <div class="scroll-wrapper" id="top-scroll">
+      <div class="scroll-wrapper" id="top-scroll" style=" margin-top: 20px; ">
         <div class="scroll-sync" style="width: 2000px;"></div> <!-- กำหนดความกว้างให้ตรงกับ table -->
       </div>
         
@@ -239,11 +239,6 @@
     fetchData(document.getElementById('type').value);
   </script>
     <script>
-        window.onload = function() {
-            setTimeout(() => {
-                document.getElementById("loader").classList.add("hide");
-            }, 1500);
-        };
         function toggleMenu() {
             const menu = document.querySelector(".nav-menu");
             const burger = document.querySelector(".hamburger");
