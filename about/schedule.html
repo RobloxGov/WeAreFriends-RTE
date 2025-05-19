@@ -79,7 +79,7 @@
   </div>
     
   <div class="table-wrapper" id="bottom-scroll">
-      <table id="data-table main-table"></table>
+      <table id="data-table"></table>
   </div>
 
   <script>
@@ -96,7 +96,7 @@
 
     // ปรับความกว้าง scroll-sync ให้ตรงกับความกว้าง table จริง
     const sync = document.querySelector('.scroll-sync');
-    const table = document.getElementById('main-table');
+    const table = document.getElementById('data-table');
     sync.style.width = table.scrollWidth + 'px';
   </script>
   
