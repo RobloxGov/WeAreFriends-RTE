@@ -33,82 +33,100 @@
     </style>
 </head>
 <body>
-      <h1>📘 ตารางเรียนและสอบ</h1>
-      <label for="type">เลือกประเภท:</label>
-      <select id="type">
-        <option value="เรียน 1/2568">ตารางเรียน</option>
-        <option value="สอบ 1/2568">ตารางสอบ</option>
-      </select>
-    
-      <table id="data-table"></table>
-    
-      <script>
-        const apiUrl = 'https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec';
-    
-        const thaiMonths = {
-          "มกราคม": 0, "กุมภาพันธ์": 1, "มีนาคม": 2, "เมษายน": 3,
-          "พฤษภาคม": 4, "มิถุนายน": 5, "กรกฎาคม": 6, "สิงหาคม": 7,
-          "กันยายน": 8, "ตุลาคม": 9, "พฤศจิกายน": 10, "ธันวาคม": 11
-        };
-    
-        function toSortableDate(entry) {
-          if (!entry["ปี"] || !entry["เดือน"] || !entry["วันที่"] || !entry["เวลาเริ่ม"]) {
-            return new Date(9999, 0, 1);
-          }
-          const year = parseInt(entry["ปี"]) - 543;
-          const month = thaiMonths[entry["เดือน"]];
-          const day = parseInt(entry["วันที่"]);
-          const [hour, minute] = entry["เวลาเริ่ม"].split(":").map(Number);
-          return new Date(year, month, day, hour, minute);
-        }
-    
-        function formatDateString(entry) {
-          return `${entry["วัน"]} ${entry["วันที่"]} ${entry["เดือน"]} ${entry["ปี"]} ${entry["เวลาเริ่ม"]} - ${entry["เวลาสิ้นสุด"]}`;
-        }
-    
-        function renderTable(data) {
-          const table = document.getElementById('data-table');
-          table.innerHTML = '';
-    
-          if (!data || data.length === 0) {
-            table.innerHTML = '<tr><td>ไม่มีข้อมูล</td></tr>';
-            return;
-          }
-    
-          const headers = Object.keys(data[0])
-            .filter(k => k && !["ปี", "เดือน", "วันที่", "วัน", "เวลาเริ่ม", "เวลาสิ้นสุด"].includes(k));
-    
-          const headerRow = document.createElement('tr');
-          headerRow.innerHTML = `<th>วัน-เวลา</th>` + headers.map(h => `<th>${h}</th>`).join('');
-          table.appendChild(headerRow);
-    
-          data.forEach(entry => {
-            const row = document.createElement('tr');
-            row.innerHTML = `<td>${formatDateString(entry)}</td>` +
-              headers.map(h => `<td>${(entry[h] || '').toString().replace(/\n/g, '<br>')}</td>`).join('');
-            table.appendChild(row);
-          });
-        }
-    
-        function fetchData(type) {
-          fetch(apiUrl)
-            .then(res => res.json())
-            .then(json => {
-              const raw = json[type] || [];
-              const sorted = raw.sort((a, b) => toSortableDate(a) - toSortableDate(b));
-              renderTable(sorted);
-            })
-            .catch(err => {
-              document.getElementById('data-table').innerHTML = `<tr><td>เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>`;
-              console.error(err);
-            });
-        }
-    
-        document.getElementById('type').addEventListener('change', e => {
-          fetchData(e.target.value);
+  <h1>📘 ตารางเรียนและสอบ</h1>
+
+  <label for="type">เลือกประเภท:</label>
+  <select id="type">
+    <option value="เรียน 1/2568">ตารางเรียน</option>
+    <option value="สอบ 1/2568">ตารางสอบ</option>
+  </select>
+
+  <button id="sortByMonth">🔁 เรียงตามเดือน</button>
+
+  <table id="data-table"></table>
+
+  <script>
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbzOY_kwIkpO9yvjDfzf-OKOyFr_FNrVi5YAxlBTPFax1Mybv0b_1Ew00qYvZZUcXEyI/exec';
+
+    const thaiMonths = {
+      "มกราคม": 0, "กุมภาพันธ์": 1, "มีนาคม": 2, "เมษายน": 3,
+      "พฤษภาคม": 4, "มิถุนายน": 5, "กรกฎาคม": 6, "สิงหาคม": 7,
+      "กันยายน": 8, "ตุลาคม": 9, "พฤศจิกายน": 10, "ธันวาคม": 11
+    };
+
+    let currentData = [];
+    let monthAsc = true;
+
+    function formatDateString(entry) {
+      return `${entry["วัน"]} ${entry["วันที่"]} ${entry["เดือน"]} ${entry["ปี"]} ${entry["เวลาเริ่ม"]} - ${entry["เวลาสิ้นสุด"] || ""}`;
+    }
+
+    function renderTable(data) {
+      const table = document.getElementById('data-table');
+      table.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        table.innerHTML = '<tr><td>ไม่มีข้อมูล</td></tr>';
+        return;
+      }
+
+      const headers = Object.keys(data[0])
+        .filter(k => k && !["ปี", "เดือน", "วันที่", "วัน", "เวลาเริ่ม", "เวลาสิ้นสุด"].includes(k));
+
+      const headerRow = document.createElement('tr');
+      headerRow.innerHTML = `<th>วัน-เวลา</th>` + headers.map(h => `<th>${h}</th>`).join('');
+      table.appendChild(headerRow);
+
+      data.forEach(entry => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${formatDateString(entry)}</td>` +
+          headers.map(h => `<td>${(entry[h] || '').toString().replace(/\n/g, '<br>')}</td>`).join('');
+        table.appendChild(row);
+      });
+    }
+
+    function sortByMonth(data, ascending = true) {
+      return [...data].sort((a, b) => {
+        const ma = thaiMonths[a["เดือน"]], mb = thaiMonths[b["เดือน"]];
+        if (ma !== mb) return ascending ? ma - mb : mb - ma;
+
+        const da = parseInt(a["วันที่"]), db = parseInt(b["วันที่"]);
+        if (da !== db) return ascending ? da - db : db - da;
+
+        const [ha, ma_ = 0] = (a["เวลาเริ่ม"] || "00:00").split(":").map(Number);
+        const [hb, mb_ = 0] = (b["เวลาเริ่ม"] || "00:00").split(":").map(Number);
+        return ascending
+          ? (ha * 60 + ma_) - (hb * 60 + mb_)
+          : (hb * 60 + mb_) - (ha * 60 + ma_);
+      });
+    }
+
+    function fetchData(type) {
+      fetch(apiUrl)
+        .then(res => res.json())
+        .then(json => {
+          const raw = json[type] || [];
+          currentData = sortByMonth(raw, monthAsc);
+          renderTable(currentData);
+        })
+        .catch(err => {
+          document.getElementById('data-table').innerHTML = `<tr><td>เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>`;
+          console.error(err);
         });
-    
-        fetchData(document.getElementById('type').value);
-      </script>
+    }
+
+    document.getElementById('type').addEventListener('change', e => {
+      fetchData(e.target.value);
+    });
+
+    document.getElementById('sortByMonth').addEventListener('click', () => {
+      monthAsc = !monthAsc;
+      currentData = sortByMonth(currentData, monthAsc);
+      renderTable(currentData);
+    });
+
+    // โหลดเริ่มต้น
+    fetchData(document.getElementById('type').value);
+  </script>
 </body>
 </html>
