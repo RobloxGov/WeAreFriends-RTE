@@ -184,7 +184,7 @@
 
     nav.active {
       display: flex;
-      height: calc(100vh - 72.4px);
+      height: calc(100vh - 66px);
       font-size: 18px;
     }
 
