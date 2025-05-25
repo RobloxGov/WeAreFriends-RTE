@@ -191,10 +191,12 @@
     nav ul {
       flex-direction: column;
       gap: 0;
+      align-items: center;
     }
 
     nav ul li {
       padding: 10px;
+        width: 90%;
     }
 
     nav ul li ul {
