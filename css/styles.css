@@ -199,6 +199,10 @@
         width: 90%;
     }
 
+    nav ul li ul li {
+        width: 100%;
+    }
+
     nav ul li ul {
       position: static;
       background: #f16322;
