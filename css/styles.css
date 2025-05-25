@@ -140,7 +140,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: white;
+    background: #f16322;
     color: black;
     display: none;
     flex-direction: column;
@@ -158,31 +158,34 @@
   }
 
   nav ul li ul li:hover {
-    background-color: #eee;
+    background-color: #ff8536;
   }
 
   .menu-toggle {
     display: none;
-    font-size: 28px;
+    font-size: 24px;
     background: none;
     border: none;
-    color: white;
+    color: #f16322;
     cursor: pointer;
   }
 
+  nav ul li ul a {color:#fff;}
   @media (max-width: 768px) {
     nav {
       position: absolute;
-      top: 60px;
+      top: 72.4px;
       left: 0;
       width: 100%;
-      background-color: #d40000;
+      background-color: #ffc199;
       flex-direction: column;
       display: none;
     }
 
     nav.active {
       display: flex;
+      height: calc(100vh - 72.4px);
+      font-size: 18px;
     }
 
     nav ul {
@@ -196,11 +199,9 @@
 
     nav ul li ul {
       position: static;
-      background: #f8f8f8;
+      background: #f16322;
       display: none;
-      padding-left: 20px;
     }
-
     nav ul li.show>ul {
       display: flex;
     }
@@ -208,15 +209,24 @@
     .menu-toggle {
       display: block;
     }
+    nav a {
+     border-bottom: 3px solid transparent;
+     transition: border-color .5s ease;
+    }
+   
+    .nav a:hover {
+        border-bottom: 3px solid;
+    }
   }
 
-  a {
-    color: white;
+  nav a {
+    font-weight: 500;
+    color: #F16322;
     text-decoration: none;
     cursor: pointer;
   }
 
-  nav ul li>a {
+  nav ul li > a {
     display: block;
     padding: 5px 0;
   }
