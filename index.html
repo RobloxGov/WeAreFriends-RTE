@@ -1,92 +1,148 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title -->
-    <title>RTE KMITL - Rail Transportation Engineering</title>
-    <meta name="description" content="กลุ่มเพื่อนนักศึกษาวิศวะ หลักสูตรวิศวกรรมวิศวกรรมขนส่งทางราง (Rail Transportation Engineering) ของ KMITL">
-    <!-- Open Graph (สำหรับ Facebook, LINE, LinkedIn) -->
-    <meta property="og:title" content="RTE KMITL - Rail Transportation Engineering">
-    <meta property="og:description" content="กลุ่มเพื่อนนักศึกษาวิศวะ ขนส่งทางรางที่ KMITL">
-    <meta property="og:image" content="/img/rte.webp">
-    <meta property="og:url" content="https://rte-kmitl.pages.dev/">
-    <meta property="og:type" content="website">
-    <!-- Twitter Card (สำหรับ Twitter) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="RTE KMITL - Rail Transportation Engineering">
-    <meta name="twitter:description" content="กลุ่มเพื่อนนักศึกษาวิศวะ ขนส่งทางรางที่ KMITL">
-    <meta name="twitter:image" content="/img/rte.webp">
-    <!-- Favicon -->
-    <link rel="icon" href="/img/rte.webp">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="/css/styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Title -->
+  <title>RTE KMITL - Rail Transportation Engineering</title>
+  <meta name="description"
+    content="กลุ่มเพื่อนนักศึกษาวิศวะ หลักสูตรวิศวกรรมวิศวกรรมขนส่งทางราง (Rail Transportation Engineering) ของ KMITL">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Open Graph (สำหรับ Facebook, LINE, LinkedIn) -->
+  <meta property="og:title" content="RTE KMITL - Rail Transportation Engineering">
+  <meta property="og:description" content="กลุ่มเพื่อนนักศึกษาวิศวะ ขนส่งทางรางที่ KMITL">
+  <meta property="og:image" content="/img/rte.webp">
+  <meta property="og:url" content="https://rte-kmitl.pages.dev/">
+  <meta property="og:type" content="website">
+  <!-- Twitter Card (สำหรับ Twitter) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RTE KMITL - Rail Transportation Engineering">
+  <meta name="twitter:description" content="กลุ่มเพื่อนนักศึกษาวิศวะ ขนส่งทางรางที่ KMITL">
+  <meta name="twitter:image" content="/img/rte.webp">
+  <!-- Favicon -->
+  <link rel="icon" href="/img/rte.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-    <div id="loader">
-        <div class="loader"></div>
+  <div id="loader">
+    <div class="loader"></div>
+  </div>
+  <header>
+    <div class="logo">
+      <img src="/img/KMITL_Sublogo.svg" alt="KMITL Logo">
+      <img src="/img/rte13.png" alt="RTE13 Logo">
     </div>
-    
-    <header class="header">
-        <div class="logo">
-        	<img src="/img/kmitl.svg"> KMITL <img src="/img/rte.webp"> RTE
-        </div>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-        <nav class="nav nav-menu">
-            <a href="/">หน้าแรก</a>
-            <a href="/about/">เกี่ยวกับ</a>
-            <a href="#contact">ติดต่อ</a>
-        </nav>
-    </header>
-    
-    <div class="air-66"></div>
-    
-    <div class="slider">
-        <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
-        <div class="slides">
-            <img src="/img/WAFs.png" alt="Slide 1">
-            <img src="/img/WAFs.png" alt="Slide 2">
-            <img src="/img/WAFs.png" alt="Slide 3">
-        </div>
-        <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
+    <button class="menu-toggle" id="menu-toggle">
+      <i class="fa-solid fa-bars" id="menu-icon"></i>
+    </button>
+    <nav id="main-menu">
+      <ul>
+        <li><a href="#">หน้าหลัก</a></li>
+        <li class="has-sub"><a href="#">เกี่ยวกับ</a>
+          <ul>
+            <li><a href="/about/">สมาชิก</a></li>
+            <li><a href="/about/schedule">ตารางเรียน/สอบ</a></li>
+            <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
+            <li><a href="#">ปฏิทิน</a></li>
+          </ul>
+        </li>
+        <li class="has-sub"><a href="#">สำหรับนักศึกษา</a>
+          <ul>
+            <li><a href="#">ลงทะเบียนเรียน</a></li>
+            <li><a href="#">ตารางเรียน/สอบ</a></li>
+            <li><a href="#">REG KMITL</a></li>
+          </ul>
+        </li>
+        <li><a href="#">ติดต่อ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="air-66"></div>
+
+  <div class="slider">
+    <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
+    <div class="slides">
+      <img src="/img/WAFs.png" alt="Slide 1">
+      <img src="/img/WAFs.png" alt="Slide 2">
+      <img src="/img/WAFs.png" alt="Slide 3">
     </div>
-    
-    <main class="main">
-        <h1>ยินดีต้อนรับสู่ We are friends RTE , KMITL</h1>
-        <p>เราคือกลุ่มเพื่อนที่พร้อมจะเดินไปด้วยกัน</p>
-    </main>
-    
-    <section class="section" id="about">
-        <h2>เกี่ยวกับเรา</h2>
-        <p>เราคือกลุ่มเพื่อนจาก RTE และ KMITL ที่มีเป้าหมายร่วมกันในการพัฒนาและสร้างสรรค์สิ่งดี ๆ เพื่ออนาคต</p>
-    </section>
-    
-    <footer class="footer">
-        &copy; 2025 We are friends RTE, KMITL | All Rights Reserved
-    </footer>
-    
-    <script>
-        window.onload = function() {
-            setTimeout(() => {
-                document.getElementById("loader").classList.add("hide");
-            }, 1500);
-        };
-        function toggleMenu() {
-            const menu = document.querySelector(".nav-menu");
-            const burger = document.querySelector(".hamburger");
-            menu.classList.toggle("show");
-            burger.textContent = menu.classList.contains("show") ? "✖" : "☰";
-        }
-        let index = 0;
-        function showSlide(n) {
-            const slides = document.querySelector(".slides");
-            const totalSlides = slides.children.length;
-            index = (n + totalSlides) % totalSlides;
-            slides.style.transform = `translateX(-${index * 100}%)`;
-        }
-        function prevSlide() { showSlide(index - 1); }
-        function nextSlide() { showSlide(index + 1); }
-        setInterval(() => nextSlide(), 5000);
-    </script>
+    <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
+  </div>
+
+  <main class="main">
+    <h1>ยินดีต้อนรับสู่ We are friends RTE , KMITL</h1>
+    <p>เราคือกลุ่มเพื่อนที่พร้อมจะเดินไปด้วยกัน</p>
+  </main>
+
+  <section class="section" id="about">
+    <h2>เกี่ยวกับเรา</h2>
+    <p>เราคือกลุ่มเพื่อนจาก RTE และ KMITL ที่มีเป้าหมายร่วมกันในการพัฒนาและสร้างสรรค์สิ่งดี ๆ เพื่ออนาคต</p>
+  </section>
+
+  <footer class="footer">
+    &copy; 2025 We are friends RTE, KMITL | All Rights Reserved
+  </footer>
+
+  <script>
+    window.onload = function () {
+      setTimeout(() => {
+        document.getElementById("loader").classList.add("hide");
+      }, 1500);
+    };
+    let index = 0;
+    function showSlide(n) {
+      const slides = document.querySelector(".slides");
+      const totalSlides = slides.children.length;
+      index = (n + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+    function prevSlide() { showSlide(index - 1); }
+    function nextSlide() { showSlide(index + 1); }
+    setInterval(() => nextSlide(), 5000);
+  </script>
+
+  <script>
+    const toggleBtn = document.getElementById("menu-toggle");
+    const nav = document.getElementById("main-menu");
+    const menuIcon = document.getElementById("menu-icon");
+    let isOpen = false;
+
+    toggleBtn.addEventListener("click", () => {
+      nav.classList.toggle("active");
+      isOpen = !isOpen;
+      menuIcon.classList.toggle("fa-bars", !isOpen);
+      menuIcon.classList.toggle("fa-x", isOpen);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        nav.classList.remove("active");
+        menuIcon.classList.add("fa-bars");
+        menuIcon.classList.remove("fa-x");
+        isOpen = false;
+      }
+    });
+
+    // คลิกเปิด/ปิดเมนูย่อย
+    document.querySelectorAll("li.has-sub > a").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault(); // ป้องกันลิงก์กระโดด
+        const parent = item.parentElement;
+        parent.classList.toggle("show");
+
+        // ปิดเมนูอื่นที่เปิดอยู่
+        document.querySelectorAll("li.has-sub").forEach(other => {
+          if (other !== parent) {
+            other.classList.remove("show");
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
