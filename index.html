@@ -116,14 +116,14 @@
       nav.classList.toggle("active");
       isOpen = !isOpen;
       menuIcon.classList.toggle("fa-bars", !isOpen);
-      menuIcon.classList.toggle("fa-x", isOpen);
+      menuIcon.classList.toggle("fa-xmark", isOpen);
     });
 
     window.addEventListener("resize", () => {
       if (window.innerWidth > 768) {
         nav.classList.remove("active");
         menuIcon.classList.add("fa-bars");
-        menuIcon.classList.remove("fa-x");
+        menuIcon.classList.remove("fa-xmark");
         isOpen = false;
       }
     });
