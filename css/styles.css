@@ -1,177 +1,283 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
-        }
-        body {
-            background-color: white;
-            color: #333;
-        }
-        #loader {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: #F16322;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            z-index: 1001;
-            top: 0;
-        }
-       .loader {
-         width: fit-content;
-         font-size: 40px;
-         font-family: system-ui,sans-serif;
-         font-weight: bold;
-         text-transform: uppercase;
-         color: #0000;
-         -webkit-text-stroke: 1px #fff;
-         background: conic-gradient(#fff 0 0) text;
-         animation: l8 2s linear infinite;
-       }
-       .loader:before {
-         content: "RTE KMITL";
-       }
-       @keyframes l8 {
-         0%,2%,8%,11%,15%,21%,30%,32%,35%,40%,46%,47%,53%,61%,70%,72%,77%,80%,86%   {background-size: 0    0   }
-         1%,9%,10%,16%,20%,31%,34%,41%,45%,48%,52%,55%,60%,73%,76%,81%,85%,96%,100% {background-size: 100% 100%}
-       }
-        #loader.hide {
-            display: none !important;
-        }
-        .header {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background: white;
-            color: #F16322;
-            padding: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            display: flex;
-            gap: 10px;
-        }
-       .logo img{
-            height: 36px;
-       }
-        .nav {
-            display: flex;
-            gap: 20px;
-        }
-        .nav a {
-            color: #F16322;
-            font-weight: 500;
-            text-decoration: none;
-            font-size: 18px;
-            margin: -33px -10px;
-            padding: 19px 10px 16px 10px;
-    		border-bottom: 3px solid transparent;
-            transition:border-color .5s ease;
-        }
-        .nav a:hover {
-    		border-bottom: 3px solid;
-        }
-        .hamburger {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .nav-menu {
-            display: flex;
-        }
-        @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-            .nav-menu {
-                flex-direction: column;
-                position: absolute;
-                top: 66px;
-                left: 0;
-                background: #ffc199;
-                width: 100%;
-                height: 0;
-                overflow: hidden;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                opacity: 0;
-                transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            }
-            .nav-menu a {
-                display: block;
-            	color: #F16322;
-                padding: 10px;
-                margin: 0;
-        		width: 90%;
-            }
-            
-            .nav-menu a:first-child {
-                margin-top: 20px;
-            }
-            
-            .nav-menu.show {
-                height: calc(100vh - 66px);
-                opacity: 1;
-        		align-items: center;
-            }
-        }
-        .slider {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        .slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .slides img {
-            width: 100%;
-            object-fit: cover;
-        }
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 18px;
-            z-index: 90;
-        }
-        .prev { left: 10px; }
-        .next { right: 10px; }
-        .main {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .section {
-            background: #F16322;
-            color: white;
-            padding: 50px 20px;
-            text-align: center;
-        }
-        .footer {
-            background: #222;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
-        } 
-        .air-66{
-        	height: 66px;
-        }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+  }
+
+  body {
+    background-color: white;
+    color: #333;
+  }
+
+  #loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #F16322;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    z-index: 1001;
+    top: 0;
+  }
+
+  .loader {
+    width: fit-content;
+    font-size: 40px;
+    font-family: system-ui, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #0000;
+    -webkit-text-stroke: 1px #fff;
+    background: conic-gradient(#fff 0 0) text;
+    animation: l8 2s linear infinite;
+  }
+
+  .loader:before {
+    content: "RTE KMITL";
+  }
+
+  @keyframes l8 {
+
+    0%,
+    2%,
+    8%,
+    11%,
+    15%,
+    21%,
+    30%,
+    32%,
+    35%,
+    40%,
+    46%,
+    47%,
+    53%,
+    61%,
+    70%,
+    72%,
+    77%,
+    80%,
+    86% {
+      background-size: 0 0
+    }
+
+    1%,
+    9%,
+    10%,
+    16%,
+    20%,
+    31%,
+    34%,
+    41%,
+    45%,
+    48%,
+    52%,
+    55%,
+    60%,
+    73%,
+    76%,
+    81%,
+    85%,
+    96%,
+    100% {
+      background-size: 100% 100%
+    }
+  }
+
+  #loader.hide {
+    display: none !important;
+  }
+
+  .header {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: white;
+    color: #F16322;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    gap: 10px;
+  }
+
+  .logo img {
+    height: 36px;
+    margin-right: 10px;
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+
+  nav ul li {
+    position: relative;
+  }
+
+  nav ul li ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    color: black;
+    display: none;
+    flex-direction: column;
+    min-width: 160px;
+    z-index: 1000;
+  }
+
+  nav ul li.show>ul {
+    display: flex;
+  }
+
+  nav ul li ul li {
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+
+  nav ul li ul li:hover {
+    background-color: #eee;
+  }
+
+  .menu-toggle {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: #d40000;
+      flex-direction: column;
+      display: none;
+    }
+
+    nav.active {
+      display: flex;
+    }
+
+    nav ul {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    nav ul li {
+      padding: 10px;
+    }
+
+    nav ul li ul {
+      position: static;
+      background: #f8f8f8;
+      display: none;
+      padding-left: 20px;
+    }
+
+    nav ul li.show>ul {
+      display: flex;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  nav ul li>a {
+    display: block;
+    padding: 5px 0;
+  }
+
+  .slider {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slides img {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 90;
+  }
+
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+
+  .main {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .section {
+    background: #F16322;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+  }
+
+  .footer {
+    background: #222;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .air-66 {
+    height: 66px;
+  }
