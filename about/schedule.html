@@ -127,17 +127,36 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-        	<img src="/img/kmitl.svg"> KMITL <img src="/img/rte.webp"> RTE
-        </div>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-        <nav class="nav nav-menu">
-            <a href="/">หน้าแรก</a>
-            <a href="">เกี่ยวกับ</a>
-            <a href="/contact/">ติดต่อ</a>
-        </nav>
-    </header>
+  <header class="header">
+    <div class="logo">
+      <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+      <img src="/img/rte13.png" alt="RTE13 Logo">
+    </div>
+    <button class="menu-toggle" id="menu-toggle">
+      <i class="fa-solid fa-bars" id="menu-icon"></i>
+    </button>
+    <nav id="main-menu">
+      <ul>
+        <li><a href="#">หน้าหลัก</a></li>
+        <li class="has-sub"><a href="#">เกี่ยวกับ</a>
+          <ul>
+            <li><a href="/about/">สมาชิก</a></li>
+            <li><a href="/about/schedule">ตารางเรียน/สอบ</a></li>
+            <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
+            <li><a href="#">ปฏิทิน</a></li>
+          </ul>
+        </li>
+        <li class="has-sub"><a href="#">สำหรับนักศึกษา</a>
+          <ul>
+            <li><a href="#">ลงทะเบียนเรียน</a></li>
+            <li><a href="#">ตารางเรียน/สอบ</a></li>
+            <li><a href="#">REG KMITL</a></li>
+          </ul>
+        </li>
+        <li><a href="#">ติดต่อ</a></li>
+      </ul>
+    </nav>
+  </header>
     <div id="loader" class="loader-overlay">
       <div class="spinner"></div>
     </div>
@@ -279,13 +298,45 @@
     }
 
   </script>
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector(".nav-menu");
-            const burger = document.querySelector(".hamburger");
-            menu.classList.toggle("show");
-            burger.textContent = menu.classList.contains("show") ? "✖" : "☰";
-        }
-    </script>
+  
+
+  <script>
+    const toggleBtn = document.getElementById("menu-toggle");
+    const nav = document.getElementById("main-menu");
+    const menuIcon = document.getElementById("menu-icon");
+    let isOpen = false;
+
+    toggleBtn.addEventListener("click", () => {
+      nav.classList.toggle("active");
+      isOpen = !isOpen;
+      menuIcon.classList.toggle("fa-bars", !isOpen);
+      menuIcon.classList.toggle("fa-xmark", isOpen);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        nav.classList.remove("active");
+        menuIcon.classList.add("fa-bars");
+        menuIcon.classList.remove("fa-xmark");
+        isOpen = false;
+      }
+    });
+
+    // คลิกเปิด/ปิดเมนูย่อย
+    document.querySelectorAll("li.has-sub > a").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault(); // ป้องกันลิงก์กระโดด
+        const parent = item.parentElement;
+        parent.classList.toggle("show");
+
+        // ปิดเมนูอื่นที่เปิดอยู่
+        document.querySelectorAll("li.has-sub").forEach(other => {
+          if (other !== parent) {
+            other.classList.remove("show");
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
