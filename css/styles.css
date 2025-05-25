@@ -293,3 +293,10 @@
   .air-66 {
     height: 66px;
   }
+  #main-menu > ul > li{
+     border-bottom: 3px solid transparent;
+     transition: border-color .5s ease;
+  }
+  #main-menu > ul > li:hover{
+     border-bottom: 3px solid ;
+  }
