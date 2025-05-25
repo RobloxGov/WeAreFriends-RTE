@@ -138,7 +138,7 @@
 
   nav ul li ul {
     position: absolute;
-    top: 100%;
+    top: 55px;
     left: 0;
     background: #f16322;
     color: black;
@@ -304,3 +304,6 @@
   #main-menu > ul > li:hover{
      border-bottom: 3px solid ;
   }
+.show ul {
+    gap: 0;
+}
