@@ -133,3 +133,10 @@ a.d-inline-block.mt-3.mb-5 {
 span.date.d-inline-block a {
     color: #0a0053;
 }
+
+.col-6 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
