@@ -24,7 +24,7 @@ function renderMembers(membersData) {
     // สร้าง HTML สำหรับแต่ละสมาชิก
     membersData.forEach(({ link, image, name, surname, fromS, province, round,content }) => {
         const membersItem = `
-            <div class="col-12">
+            <div class="col-6">
                 <div class="single-members-item">
                     <img fetchpriority="high" decoding="async" src="${image}" alt="" class="img-fluid">
                     <div class="info mt-3">
