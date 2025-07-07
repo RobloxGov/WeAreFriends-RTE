@@ -1,0 +1,97 @@
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
+
+.boxes {
+    display: flex;
+    margin: 1em 0;
+    gap: 10px;
+}
+
+.boxes .box {
+    width: 50%;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.boxes .box:has(.details) {
+    background: #ff8000;
+}
+
+table {
+    width: 100%;
+}
+
+.details {
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
+}
+
+.box h1 ,
+.box h2 ,
+.box h3 ,
+.box h4 {
+    background: linear-gradient(90deg, #ff7300, #eeff00 50%, #ff7300);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+}
+
+@media (max-width: 1200px) {
+  /* CSS ที่จะถูกใช้เมื่อหน้าจอกว้างไม่เกิน 1200px */
+    .boxes {
+        flex-direction: column;
+    }
+
+    .boxes .box {
+        width: 100%;
+    }
+}
+
+@keyframes shine {
+    to {
+        background-position: 200%
+    }
+}
