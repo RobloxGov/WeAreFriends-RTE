@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTE Gen 13</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        /* Loader Styles */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #f16322;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo-container img {
+            height: 50px;
+        }
+        
+        .nav-desktop {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-desktop > ul {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-desktop li {
+            position: relative;
+            padding: 10px 0;
+        }
+        
+        .nav-desktop > ul > li > a {
+            font-weight: 500;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-desktop > ul > li > a:hover {
+            background-color: #f16322;
+            color: white;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 10px 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .nav-desktop li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-menu li a:hover {
+            background-color: #f16322;
+            color: white;
+        }
+        
+        .login-btn {
+            background-color: #f16322;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: #d35400;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            left: 0;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu-close {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .mobile-nav li {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-nav li a {
+            display: block;
+            padding: 15px;
+        }
+        
+        .mobile-dropdown {
+            padding-left: 20px;
+            display: none;
+        }
+        
+        .mobile-dropdown.active {
+            display: block;
+        }
+        
+        .mobile-dropdown-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: inherit;
+            color: inherit;
+            cursor: pointer;
+        }
+        
+        .mobile-dropdown-btn::after {
+            content: '+';
+            font-size: 18px;
+        }
+        
+        .mobile-dropdown-btn.active::after {
+            content: '-';
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Banner Styles */
+        .banner {
+            width: 100%;
+            height: 400px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1920x400');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .banner-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .banner-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5% 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #f16322;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 10px;
+            color: #f16322;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 50px 0 0;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-logo img {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        
+        .footer-menu h3 {
+            color: #f16322;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-menu ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-menu ul li a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-menu ul li a:hover {
+            opacity: 1;
+            color: #f16322;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 20px;
+            background-color: #111;
+            margin-top: 50px;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .nav-desktop {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .banner-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .banner {
+                height: 300px;
+            }
+            
+            .banner-content h1 {
+                font-size: 2rem;
+            }
+            
+            .banner-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                <img src="/img/rte13.png" alt="RTE13 Logo">
+            </div>
+            
+            <nav class="nav-desktop">
+                <ul>
+                    <li>
+                        <a href="#">เกี่ยวกับ</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">สมาชิก</a></li>
+                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="#">หลักสูตร</a></li>
+                            <li><a href="#">ปฏิทิน</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">สำหรับนักศึกษา</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">ลงทะเบียนเรียน</a></li>
+                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="#">REG KMITL</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">ผู้บริหาร</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">คณะกรรมการบริหาร</a></li>
+                            <li><a href="#">โครงสร้างองค์กร</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="#" class="login-btn">เข้าสู่ระบบ(สมาชิก RTE13)</a>
+            </nav>
+            
+            <div class="mobile-menu-btn"><i class="fa-solid fa-bars" id="menu-icon"></i></div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo-container">
+                <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo" style="height: 40px;">
+                <img src="/img/rte13.png" alt="RTE13 Logo" style="height: 40px;">
+            </div>
+            <div class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        
+        <ul class="mobile-nav">
+            <li>
+                <button class="mobile-dropdown-btn">เกี่ยวกับ</button>
+                <ul class="mobile-dropdown">
+                    <li><a href="#">สมาชิก</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">หลักสูตร</a></li>
+                    <li><a href="#">ปฏิทิน</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="mobile-dropdown-btn">สำหรับนักศึกษา</button>
+                <ul class="mobile-dropdown">
+                    <li><a href="#">ลงทะเบียนเรียน</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">REG KMITL</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="mobile-dropdown-btn">ผู้บริหาร</button>
+                <ul class="mobile-dropdown">
+                    <li><a href="#">คณะกรรมการบริหาร</a></li>
+                    <li><a href="#">โครงสร้างองค์กร</a></li>
+                </ul>
+            </li>
+            <li><a href="#" style="display: block; background-color: #f16322; color: white; text-align: center; margin: 10px; border-radius: 5px; padding: 10px;">เข้าสู่ระบบ(สมาชิก RTE13)</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay"></div>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-content">
+            <h1>ยินดีต้อนรับสู่ RTE Gen 13</h1>
+            <p>คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2 class="section-title">ข่าวสารและกิจกรรม</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://via.placeholder.com/300x200');"></div>
+                <div class="card-content">
+                    <h3>กิจกรรมพบปะนักศึกษาใหม่</h3>
+                    <p>กิจกรรมต้อนรับนักศึกษาใหม่ RTE Gen 13 ในวันที่ 15 มิถุนายน 2566</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://via.placeholder.com/300x200');"></div>
+                <div class="card-content">
+                    <h3>กำหนดการลงทะเบียนเรียน</h3>
+                    <p>กำหนดการลงทะเบียนเรียนภาคการศึกษาที่ 1 ปีการศึกษา 2566</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://via.placeholder.com/300x200');"></div>
+                <div class="card-content">
+                    <h3>โครงการแลกเปลี่ยนนักศึกษา</h3>
+                    <p>เปิดรับสมัครโครงการแลกเปลี่ยนนักศึกษาประจำปี 2566</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-container">
+                    <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                    <img src="/img/rte13.png" alt="RTE13 Logo">
+                </div>
+                <p>คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>เกี่ยวกับ</h3>
+                <ul>
+                    <li><a href="#">สมาชิก</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">หลักสูตร</a></li>
+                    <li><a href="#">ปฏิทิน</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>สำหรับนักศึกษา</h3>
+                <ul>
+                    <li><a href="#">ลงทะเบียนเรียน</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">REG KMITL</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>ผู้บริหาร</h3>
+                <ul>
+                    <li><a href="#">คณะกรรมการบริหาร</a></li>
+                    <li><a href="#">โครงสร้างองค์กร</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>ติดต่อเรา</h3>
+                <ul>
+                    <li><a href="#">ที่อยู่</a></li>
+                    <li><a href="#">อีเมล</a></li>
+                    <li><a href="#">โทรศัพท์</a></li>
+                    <li><a href="#">แผนที่</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 RTE Gen 13. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Loader
+        window.addEventListener('load', function() {
+            const loaderContainer = document.querySelector('.loader-container');
+            loaderContainer.style.opacity = '0';
+            setTimeout(() => {
+                loaderContainer.style.display = 'none';
+            }, 500);
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileMenuClose.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        overlay.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Mobile Dropdown Toggle
+        const dropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+        
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const dropdown = this.nextElementSibling;
+                dropdown.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
