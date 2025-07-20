@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTE Gen 13</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                <img src="/img/rte13.png" alt="RTE13 Logo">
+            </div>
+            
+            <nav class="nav-desktop">
+                <ul>
+                    <li>
+                        <a href="#">เกี่ยวกับ</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">สมาชิก</a></li>
+                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
+                            <li><a href="#">ปฏิทิน</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">สำหรับนักศึกษา</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">ลงทะเบียนเรียน</a></li>
+                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="#">REG KMITL</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">ผู้บริหาร</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">คณะกรรมการบริหาร</a></li>
+                            <li><a href="#">โครงสร้างองค์กร</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="/member/login" class="login-btn">เข้าสู่ระบบ</a>
+            </nav>
+            
+            <div class="mobile-menu-btn"><i class="fa-solid fa-bars" id="menu-icon"></i></div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo-container">
+                <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo" style="height: 40px;">
+                <img src="/img/rte13.png" alt="RTE13 Logo" style="height: 40px;">
+            </div>
+            <div class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        
+        <ul class="mobile-nav">
+            <li>
+                <button class="mobile-dropdown-btn">เกี่ยวกับ</button>
+                <ul class="mobile-dropdown">
+                    <li><a href="/member">สมาชิก</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">หลักสูตร</a></li>
+                    <li><a href="#">ปฏิทิน</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="mobile-dropdown-btn">สำหรับนักศึกษา</button>
+                <ul class="mobile-dropdown">
+                    <li><a href="#">ลงทะเบียนเรียน</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">REG KMITL</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="mobile-dropdown-btn">ผู้บริหาร</button>
+                <ul class="mobile-dropdown">
+                    <li><a href="#">คณะกรรมการบริหาร</a></li>
+                    <li><a href="#">โครงสร้างองค์กร</a></li>
+                </ul>
+            </li>
+            <li><a href="#" style="display: block; background-color: #f16322; color: white; text-align: center; margin: 10px; border-radius: 5px; padding: 10px;">เข้าสู่ระบบ(สมาชิก RTE13)</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay"></div>
+    
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-container">
+            <div class="auth-close" id="auth-close">×</div>
+            <div class="auth-header">
+                <h2>เข้าสู่ระบบ</h2>
+                <p>เข้าสู่ระบบด้วยบัญชี Google ของคุณ</p>
+            </div>
+            
+            <div class="auth-buttons">
+                <button class="auth-btn google-btn" id="google-signin-btn">
+                    <i class="fab fa-google"></i>
+                    <span>เข้าสู่ระบบด้วย Google</span>
+                </button>
+            </div>
+            
+            <div class="auth-divider">
+                <span>หรือ</span>
+            </div>
+            
+            <form class="auth-form" id="auth-form">
+                <div class="form-group">
+                    <label for="email">อีเมล</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="auth-submit">เข้าสู่ระบบ</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>ยังไม่มีบัญชี? <a href="#" id="signup-link">สมัครสมาชิก</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-content">
+            <h1>ยินดีต้อนรับสู่ RTE Gen 13</h1>
+            <p>คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-container">
+                    <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                    <img src="/img/rte13.png" alt="RTE13 Logo">
+                </div>
+                <p>คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>เกี่ยวกับ</h3>
+                <ul>
+                    <li><a href="#">สมาชิก</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">หลักสูตร</a></li>
+                    <li><a href="#">ปฏิทิน</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>สำหรับนักศึกษา</h3>
+                <ul>
+                    <li><a href="#">ลงทะเบียนเรียน</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">REG KMITL</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>ผู้บริหาร</h3>
+                <ul>
+                    <li><a href="#">คณะกรรมการบริหาร</a></li>
+                    <li><a href="#">โครงสร้างองค์กร</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>ติดต่อเรา</h3>
+                <ul>
+                    <li><a href="#">ที่อยู่</a></li>
+                    <li><a href="#">อีเมล</a></li>
+                    <li><a href="#">โทรศัพท์</a></li>
+                    <li><a href="#">แผนที่</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 RTE Gen 13. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjfM6hJdRVJNHW8HvqPcBQHEkuf6hJuXw",
+            authDomain: "rte-login-a5ad0.firebaseapp.com",
+            projectId: "rte-login-a5ad0",
+            storageBucket: "rte-login-a5ad0.firebasestorage.app",
+            messagingSenderId: "793810206481",
+            appId: "1:793810206481:web:b524c836ffe5a8f012d6b0",
+            measurementId: "G-3B6N6Z2YP2"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // Google Auth Provider
+        const provider = new firebase.auth.GoogleAuthProvider();
+        
+        // Auth Modal Toggle
+        const authModal = document.getElementById('auth-modal');
+        const loginBtn = document.getElementById('login-btn');
+        const authClose = document.getElementById('auth-close');
+        const mobileAuthSection = document.getElementById('mobile-auth-section');
+        
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            authModal.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Mobile login button
+        const mobileLoginBtn = mobileAuthSection.querySelector('a');
+        mobileLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            authModal.classList.add('active');
+            overlay.classList.add('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        authClose.addEventListener('click', function() {
+            authModal.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        overlay.addEventListener('click', function() {
+            authModal.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Google Sign In
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        
+        googleSignInBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // User signed in
+                    updateUI(result.user);
+                    authModal.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                })
+                .catch((error) => {
+                    console.error('Sign in error:', error);
+                    alert('เกิดข้อผิดพลาดในการเข้าสู่ระบบ: ' + error.message);
+                });
+        });
+        
+        // Email/Password Sign In (placeholder)
+        const authForm = document.getElementById('auth-form');
+        
+        authForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // This is just a placeholder - you would implement actual email/password auth
+            alert('ระบบเข้าสู่ระบบด้วยอีเมล/รหัสผ่านยังไม่พร้อมใช้งาน โปรดใช้ Google Sign-In');
+        });
+        
+        // Sign up link
+        const signupLink = document.getElementById('signup-link');
+        
+        signupLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('ระบบสมัครสมาชิกยังไม่พร้อมใช้งาน โปรดใช้ Google Sign-In');
+        });
+        
+        // Update UI based on auth state
+        function updateUI(user) {
+            const authSection = document.getElementById('auth-section');
+            const mobileAuthSection = document.getElementById('mobile-auth-section');
+            
+            if (user) {
+                // User is signed in
+                authSection.innerHTML = `
+                    <div class="user-profile">
+                        <img src="${user.photoURL || 'https://via.placeholder.com/36'}" alt="User Avatar" class="user-avatar">
+                        <span class="user-name">${user.displayName || 'ผู้ใช้'}</span>
+                    </div>
+                    <button class="logout-btn" id="logout-btn">ออกจากระบบ</button>
+                `;
+                
+                mobileAuthSection.innerHTML = `
+                    <div style="padding: 15px; display: flex; align-items: center; gap: 10px;">
+                        <img src="${user.photoURL || 'https://via.placeholder.com/36'}" alt="User Avatar" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>${user.displayName || 'ผู้ใช้'}</span>
+                    </div>
+                    <a href="#" id="mobile-logout-btn" style="display: block; background-color: #f16322; color: white; text-align: center; margin: 10px; border-radius: 5px; padding: 10px;">ออกจากระบบ</a>
+                `;
+                
+                // Add logout event listeners
+                document.getElementById('logout-btn').addEventListener('click', signOut);
+                document.getElementById('mobile-logout-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    signOut();
+                });
+            } else {
+                // User is signed out
+                authSection.innerHTML = '<a href="#" class="login-btn" id="login-btn">เข้าสู่ระบบ(สมาชิก RTE13)</a>';
+                mobileAuthSection.innerHTML = '<a href="#" style="display: block; background-color: #f16322; color: white; text-align: center; margin: 10px; border-radius: 5px; padding: 10px;">เข้าสู่ระบบ(สมาชิก RTE13)</a>';
+                
+                // Re-add login event listeners
+                document.getElementById('login-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    authModal.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                mobileAuthSection.querySelector('a').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    authModal.classList.add('active');
+                    overlay.classList.add('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+        }
+        
+        // Sign out function
+        function signOut() {
+            auth.signOut().then(() => {
+                // Sign-out successful
+                updateUI(null);
+            }).catch((error) => {
+                console.error('Sign out error:', error);
+                alert('เกิดข้อผิดพลาดในการออกจากระบบ: ' + error.message);
+            });
+        }
+        
+        // Auth state observer
+        auth.onAuthStateChanged((user) => {
+            updateUI(user);
+        });
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
