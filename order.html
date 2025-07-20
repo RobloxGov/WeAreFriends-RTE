@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ค้นหาการสั่งซื้อ RTE 13</title>
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: #fff;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      color: #F16322;
+      text-align: center;
+    }
+
+    .search-container {
+      max-width: 500px;
+      margin: auto;
+      background: #fefefe;
+      padding: 1.5rem;
+      border: 2px solid #F16322;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #f1632222;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      background-color: #F16322;
+      color: white;
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d5531b;
+    }
+
+    .result {
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 1.5rem;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .status {
+      padding: 6px 12px;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .status.success { background-color: green; }
+    .status.pending { background-color: orange; }
+    .status.waiting { background-color: #FF6600; }
+
+    .not-found {
+      text-align: center;
+      color: red;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ตรวจสอบคำสั่งซื้อเสื้อ RTE 13</h1>
+
+  <div class="search-container">
+    <label>อีเมล:</label>
+    <input type="email" id="email" placeholder="เช่น 68010304@kmitl.ac.th" required />
+
+    <label>เบอร์โทร:</label>
+    <input type="tel" id="tel" placeholder="เช่น 0636879505" required />
+
+    <button onclick="searchOrder()">ค้นหา</button>
+  </div>
+
+  <div id="output" class="result" style="display:none;"></div>
+  <div id="not-found" class="not-found" style="display:none;">ไม่พบข้อมูลการสั่งซื้อ</div>
+
+  <script>
+    const URL = "https://script.google.com/macros/s/AKfycbxdzXfaJSQTi2lb5EBA2V0ZKNXH5R_JCtPwSAoQjyx5aF5k78QTR8kKcetsWRZnANcvwg/exec";
+
+    async function searchOrder() {
+      const email = document.getElementById("email").value.trim();
+      const tel = document.getElementById("tel").value.trim();
+      const output = document.getElementById("output");
+      const notFound = document.getElementById("not-found");
+
+      output.style.display = "none";
+      notFound.style.display = "none";
+      output.innerHTML = "";
+
+      if (!email || !tel) {
+        alert("กรุณากรอกทั้งอีเมลและเบอร์โทร");
+        return;
+      }
+
+      try {
+        const res = await fetch(URL);
+        const data = await res.json();
+
+        const found = data.find(entry => entry.email === email && entry.tel === tel);
+
+        if (found) {
+          let statusClass = '';
+          let statusText = found.Status || 'รอสินค้า';
+          if (statusText.includes("สำเร็จ")) statusClass = 'success';
+          else if (statusText.includes("ดำเนิน")) statusClass = 'pending';
+          else statusClass = 'waiting';
+
+          output.innerHTML = `
+            <div class="status ${statusClass}">${statusText}</div>
+            <p><strong>ชื่อ:</strong> ${found.name}</p>
+            <p><strong>อีเมล:</strong> ${found.email}</p>
+            <p><strong>เบอร์โทร:</strong> ${found.tel}</p>
+            <p><strong>เวลาสั่งซื้อ:</strong> ${new Date(found.time).toLocaleString()}</p>
+            <hr>
+            <h3>เสื้อที่สั่งซื้อ:</h3>
+            <ul>
+              ${generateShirtList(found)}
+            </ul>
+          `;
+          output.style.display = "block";
+        } else {
+          notFound.style.display = "block";
+        }
+      } catch (err) {
+        alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+        console.error(err);
+      }
+    }
+
+    function generateShirtList(order) {
+      const keys = [
+        "BlackS", "BlackM", "BlackL", "BlackXL", "BlackXXL", "BlackXXXL", "BlackXXXXL",
+        "WhiteS", "WhiteM", "WhiteL", "WhiteXL", "WhiteXXL", "WhiteXXXL", "WhiteXXXXL"
+      ];
+      const items = keys
+        .filter(k => order[k] && order[k] !== "")
+        .map(k => `<li>${k} จำนวน ${order[k]}</li>`);
+      return items.length > 0 ? items.join("") : "<li>ไม่มีรายการ</li>";
+    }
+  </script>
+
+</body>
+</html>
