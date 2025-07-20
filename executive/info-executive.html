@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คณะกรรมการบริหาร - RTE Gen 13</title>
+    <style>
+        /* ใช้สไตล์เดิมจากไฟล์หลัก */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* สไตล์ส่วนหัว - นำมาจากไฟล์หลัก */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        /* สไตล์เนื้อหาหลัก */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 5%;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            color: #f16322;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* สไตล์คณะกรรมการ */
+        .committee-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            color: #f16322;
+            border-bottom: 2px solid #f16322;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .committee-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .committee-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-photo {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 20px;
+        }
+        
+        .member-name {
+            color: #f16322;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .member-position {
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .member-details {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .member-contact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            color: #333;
+        }
+        
+        .member-contact i {
+            color: #f16322;
+        }
+        
+        /* สไตล์ Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .committee-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header (นำมาจากไฟล์หลัก) -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                <img src="/img/rte13.png" alt="RTE13 Logo">
+            </div>
+            
+            <nav class="nav-desktop">
+                <ul>
+                    <li>
+                        <a href="#">เกี่ยวกับ</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">สมาชิก</a></li>
+                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="#">หลักสูตร</a></li>
+                            <li><a href="#">ปฏิทิน</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">สำหรับนักศึกษา</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">ลงทะเบียนเรียน</a></li>
+                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="#">REG KMITL</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">ผู้บริหาร</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="committee.html">คณะกรรมการบริหาร</a></li>
+                            <li><a href="#">โครงสร้างองค์กร</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="#" class="login-btn">เข้าสู่ระบบ(สมาชิก RTE13)</a>
+            </nav>
+            
+            <div class="mobile-menu-btn">☰</div>
+        </div>
+    </header>
+    
+    <!-- เนื้อหาหลัก -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1>คณะกรรมการบริหาร RTE Gen 13</h1>
+            <p>คณะกรรมการผู้มีบทบาทสำคัญในการบริหารและพัฒนาการศึกษาของภาควิชาวิศวกรรมไฟฟ้า สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+        </div>
+        
+        <!-- คณะกรรมการบริหารหลัก -->
+        <div class="committee-section">
+            <h2 class="section-title">คณะกรรมการบริหารหลัก</h2>
+            <div class="committee-grid">
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=President" alt="ประธานคณะกรรมการ" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">ศ.ดร. สมชาย จันทร์สว่าง</h3>
+                        <p class="member-position">ประธานคณะกรรมการบริหาร</p>
+                        <p class="member-details">อาจารย์ประจำภาควิชาวิศวกรรมไฟฟ้า ผู้เชี่ยวชาญด้านระบบควบคุมอัตโนมัติ</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>somchai.j@kmitl.ac.th</span>
+                        </div>
+                        <div class="member-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>02-123-4567</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Vice+President" alt="รองประธาน" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">รศ.ดร. วรรณา ใจดี</h3>
+                        <p class="member-position">รองประธานคณะกรรมการบริหาร</p>
+                        <p class="member-details">ผู้เชี่ยวชาญด้านพลังงานไฟฟ้าและระบบสมองกลฝังตัว</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>wana.j@kmitl.ac.th</span>
+                        </div>
+                        <div class="member-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>02-123-4568</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Secretary" alt="เลขานุการ" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">ดร. วิศว์ เก่งรอบด้าน</h3>
+                        <p class="member-position">เลขานุการคณะกรรมการ</p>
+                        <p class="member-details">ผู้ประสานงานหลักของคณะกรรมการและภาควิชา</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>visa.k@kmitl.ac.th</span>
+                        </div>
+                        <div class="member-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>02-123-4569</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- คณะกรรมการฝ่ายต่างๆ -->
+        <div class="committee-section">
+            <h2 class="section-title">คณะกรรมการฝ่ายต่างๆ</h2>
+            <div class="committee-grid">
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Academic" alt="ฝ่ายวิชาการ" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">ผศ.ดร. วิชาญ เก่งวิชา</h3>
+                        <p class="member-position">หัวหน้าฝ่ายวิชาการ</p>
+                        <p class="member-details">ดูแลเรื่องหลักสูตรและการเรียนการสอน</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>wichan.k@kmitl.ac.th</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Research" alt="ฝ่ายวิจัย" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">รศ.ดร. ค้นพบ สร้างนวัตกรรม</h3>
+                        <p class="member-position">หัวหน้าฝ่ายวิจัย</p>
+                        <p class="member-details">ดูแลโครงการวิจัยและนวัตกรรม</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>konpop.s@kmitl.ac.th</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Student" alt="ฝ่ายนักศึกษา" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">อ. ดารินทร์ ใจเย็น</h3>
+                        <p class="member-position">หัวหน้าฝ่ายกิจกรรมนักศึกษา</p>
+                        <p class="member-details">ดูแลกิจกรรมและสวัสดิการนักศึกษา</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>darin.j@kmitl.ac.th</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=External" alt="ฝ่าย外部" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">ดร. สัมพันธ์ วงศ์เครือข่าย</h3>
+                        <p class="member-position">หัวหน้าฝ่ายความร่วมมือ</p>
+                        <p class="member-details">ประสานงานกับหน่วยงานภายนอกและภาคอุตสาหกรรม</p>
+                        <div class="member-contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>samphan.w@kmitl.ac.th</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ที่ปรึกษา -->
+        <div class="committee-section">
+            <h2 class="section-title">ที่ปรึกษาคณะกรรมการ</h2>
+            <div class="committee-grid">
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Advisor1" alt="ที่ปรึกษา 1" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">ศ.เกียรติคุณ ดร. ก้าวหน้า พัฒนาวิชาการ</h3>
+                        <p class="member-position">ที่ปรึกษาคณะกรรมการ</p>
+                        <p class="member-details">อดีตคณบดีคณะวิศวกรรมศาสตร์</p>
+                    </div>
+                </div>
+                
+                <div class="committee-card">
+                    <img src="https://via.placeholder.com/400x400?text=Advisor2" alt="ที่ปรึกษา 2" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">ศ.ดร. นำทาง สร้างแรงบันดาลใจ</h3>
+                        <p class="member-position">ที่ปรึกษาคณะกรรมการ</p>
+                        <p class="member-details">ผู้เชี่ยวชาญด้านวิศวกรรมไฟฟ้าระดับนานาชาติ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer (นำมาจากไฟล์หลัก) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-container">
+                    <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                    <img src="/img/rte13.png" alt="RTE13 Logo">
+                </div>
+                <p>คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>เกี่ยวกับ</h3>
+                <ul>
+                    <li><a href="#">สมาชิก</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">หลักสูตร</a></li>
+                    <li><a href="#">ปฏิทิน</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>สำหรับนักศึกษา</h3>
+                <ul>
+                    <li><a href="#">ลงทะเบียนเรียน</a></li>
+                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="#">REG KMITL</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>ผู้บริหาร</h3>
+                <ul>
+                    <li><a href="committee.html">คณะกรรมการบริหาร</a></li>
+                    <li><a href="#">โครงสร้างองค์กร</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-menu">
+                <h3>ติดต่อเรา</h3>
+                <ul>
+                    <li><a href="#">ที่อยู่</a></li>
+                    <li><a href="#">อีเมล</a></li>
+                    <li><a href="#">โทรศัพท์</a></li>
+                    <li><a href="#">แผนที่</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 RTE Gen 13. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript (นำมาจากไฟล์หลัก) -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+        
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        }
+        
+        // Mobile Dropdown Toggle
+        const dropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+        
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const dropdown = this.nextElementSibling;
+                dropdown.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
