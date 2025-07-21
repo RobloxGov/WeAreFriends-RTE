@@ -70,30 +70,37 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
-            justify-items: center; /* จัดให้อยู่กลาง grid cell */
+            align-items: stretch; /* ทำให้ความสูงเท่ากัน */
         }
         
         .committee-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
-            max-width: 300px;
-        }
-        
-        .committee-card:hover {
-            transform: translateY(-5px);
         }
         
         .member-photo {
             width: 100%;
             height: 300px;
             object-fit: cover;
+            flex-shrink: 0;
         }
         
+        .committee-card:hover {
+            transform: translateY(-5px);
+        }
         .member-info {
             padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         
         .member-name {
@@ -139,10 +146,11 @@
                 grid-template-columns: 1fr;
             }
         }
+        
         .president-card {
-            grid-column: 1 / -1; /* ให้กินเต็มแถว */
-            max-width: 300px;     /* ทำให้เท่ากับ card อื่น */
-            margin: 0 auto;       /* จัดให้อยู่กลาง */
+            grid-column: 1 / -1;
+            max-width: 300px;
+            margin: 0 auto 30px auto; /* อยู่กลางและมีระยะห่างข้างล่าง */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
