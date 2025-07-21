@@ -137,6 +137,11 @@
                 grid-template-columns: 1fr;
             }
         }
+        .president-card {
+            grid-column: 1 / -1;
+            justify-self: center;
+            max-width: 400px;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -195,19 +200,11 @@
         <div class="committee-section">
             <h2 class="section-title">คณะกรรมการบริหาร</h2>
             <div class="committee-grid">
-                <div class="committee-card">
+                <div class="committee-card president-card">
                     <img src="" alt="ประธานกรรมการ" class="member-photo">
                     <div class="member-info">
                         <h3 class="member-name">ว่าง</h3>
                         <p class="member-position">ประธานกรรมการบริหาร</p>
-                        <!-- <div class="member-contact">
-                            <i class="fas fa-envelope"></i>
-                            <span>6801xxx@kmitl.ac.th</span>
-                        </div>
-                        <div class="member-contact">
-                            <i class="fas fa-phone"></i>
-                            <span>-</span>
-                        </div> -->
                     </div>
                 </div>
                 
@@ -244,14 +241,6 @@
                         <p class="member-position">เหรัญญิก</p>
                     </div>
                 </div>
-                
-            </div>
-        </div>
-        
-        <!-- คณะกรรมการฝ่ายต่างๆ -->
-        <div class="committee-section">
-            <h2 class="section-title">คณะกรรมการฝ่ายต่างๆ</h2>
-            <div class="committee-grid">
                 
                 <div class="committee-card">
                     <img src="" alt="กรรมการบริหาร ฝ่ายวิชาการ" class="member-photo">
@@ -295,7 +284,6 @@
                 
             </div>
         </div>
-        
     </div>
     
     <!-- Footer (นำมาจากไฟล์หลัก) -->
