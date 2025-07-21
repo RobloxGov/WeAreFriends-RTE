@@ -70,10 +70,12 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
-            align-items: stretch; /* ทำให้ความสูงเท่ากัน */
+            justify-items: center; /* จัดให้ทุกใบอยู่กลาง cell */
         }
         
         .committee-card {
+            width: 100%;
+            max-width: 300px; /* กำหนดความกว้างเท่ากันทุกใบ */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -83,6 +85,10 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+        }
+        
+        .president-card {
+            grid-column: 1 / -1; /* ให้กินเต็มแถว */
         }
         
         .member-photo {
@@ -148,7 +154,6 @@
         }
         
         .president-card {
-            grid-column: 1 / -1;
             max-width: 300px;
             margin: 0 auto 30px auto; /* อยู่กลางและมีระยะห่างข้างล่าง */
         }
