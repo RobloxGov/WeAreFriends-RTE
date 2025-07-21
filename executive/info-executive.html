@@ -70,6 +70,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            justify-items: center; /* จัดให้อยู่กลาง grid cell */
         }
         
         .committee-card {
@@ -78,6 +79,7 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            max-width: 300px;
         }
         
         .committee-card:hover {
@@ -138,9 +140,9 @@
             }
         }
         .president-card {
-            grid-column: 1 / -1;
-            justify-self: center;
-            max-width: 400px;
+            grid-column: 1 / -1; /* ให้กินเต็มแถว */
+            max-width: 300px;     /* ทำให้เท่ากับ card อื่น */
+            margin: 0 auto;       /* จัดให้อยู่กลาง */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
