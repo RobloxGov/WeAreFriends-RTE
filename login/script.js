@@ -86,7 +86,7 @@ async function loadUserData() {
         row.appendChild(cellIndex);
         
         const cellTopic = document.createElement('td');
-        cellTopic.textContent = `หัวข้อที่ ${i}`;
+        cellTopic.textContent = `สอบครั้งที่ ${i}`;
         row.appendChild(cellTopic);
         
         const cellScore = document.createElement('td');
