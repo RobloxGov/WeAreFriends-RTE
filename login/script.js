@@ -56,11 +56,13 @@ async function checkLogin(username, password) {
 }
 
 // ฟังก์ชันโหลดข้อมูลผู้ใช้
+// ในฟังก์ชัน loadUserData() ให้แก้ไขส่วนที่สร้างตารางคะแนนเป็นดังนี้:
+
 async function loadUserData() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     
     if (!loggedInUser) {
-        window.location.href = 'index.html';
+        window.location.href = '/login/index.html';
         return;
     }
     
@@ -74,8 +76,21 @@ async function loadUserData() {
     const scoreTableBody = document.getElementById('scoreTableBody');
     scoreTableBody.innerHTML = '';
     
-    // เพิ่มคะแนนแต่ละหัวข้อ
-    for (let i = 1; i <= 15; i++) {
+    // กำหนดชื่อหัวข้อตามเงื่อนไข
+    const topicNames = {
+        '1': 'สอบครั้งที่ 1',
+        '2': 'สอบครั้งที่ 2',
+        '3': 'สอบครั้งที่ 3',
+        '4': 'สอบครั้งที่ 4',
+        '5': 'สอบครั้งที่ 5',
+        '6': 'สอบครั้งที่ 6',
+        '7': 'สอบครั้งที่ 7',
+        '8': 'กลางภาค',
+        '9': 'ปลายภาค'
+    };
+    
+    // เพิ่มคะแนนแต่ละหัวข้อ (เฉพาะสอบครั้งที่ 1-9)
+    for (let i = 1; i <= 9; i++) {
         const scoreKey = i.toString();
         const scoreValue = loggedInUser[scoreKey];
         
@@ -86,7 +101,7 @@ async function loadUserData() {
         row.appendChild(cellIndex);
         
         const cellTopic = document.createElement('td');
-        cellTopic.textContent = `สอบครั้งที่ ${i}`;
+        cellTopic.textContent = topicNames[scoreKey] || `สอบครั้งที่ ${i}`;
         row.appendChild(cellTopic);
         
         const cellScore = document.createElement('td');
@@ -110,7 +125,6 @@ async function loadUserData() {
         scoreTableBody.appendChild(row);
     }
 }
-
 // ฟังก์ชันอัพเดทวันที่และเวลา
 function updateDateTime() {
     const now = new Date();
