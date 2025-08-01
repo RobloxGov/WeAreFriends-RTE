@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>แดชบอร์ดคะแนน</title>
+    <link rel="icon" href="/img/KMITL_Sublogo.svg.png" type="image/png">
     <link rel="stylesheet" href="/login/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -20,6 +21,22 @@
                 <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
             </div>
         </header>
+
+        <!-- เพิ่มส่วนปุ่มการกระทำ -->
+        <div class="action-buttons">
+            <a href="quiz.html" class="action-btn quiz-btn">
+                <i class="fas fa-pencil-alt"></i>
+                <span>ทำแบบทดสอบ</span>
+            </a>
+            <a href="average-score.html" class="action-btn average-btn">
+                <i class="fas fa-chart-bar"></i>
+                <span>คะแนนเฉลี่ยแบบทดสอบ</span>
+            </a>
+            <button class="action-btn guide-btn disabled">
+                <i class="fas fa-question-circle"></i>
+                <span>แนะนำวิธีใช้งาน</span>
+            </button>
+        </div>
 
         <div class="user-profile">
             <div class="profile-card">
