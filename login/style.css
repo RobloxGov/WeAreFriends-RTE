@@ -379,3 +379,72 @@ footer i {
         justify-content: space-between;
     }
 }
+
+/* เพิ่มสไตล์สำหรับปุ่มการกระทำ */
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn i {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.action-btn span {
+    font-size: 16px;
+}
+
+.quiz-btn {
+    background-color: #4CAF50; /* สีเขียว */
+}
+
+.quiz-btn:hover {
+    background-color: #3e8e41;
+    transform: translateY(-3px);
+}
+
+.average-btn {
+    background-color: #2196F3; /* สีน้ำเงิน */
+}
+
+.average-btn:hover {
+    background-color: #0b7dda;
+    transform: translateY(-3px);
+}
+
+.guide-btn {
+    background-color: #9E9E9E; /* สีเทา */
+    cursor: not-allowed;
+    border: none;
+}
+
+/* สำหรับปุ่มที่ disabled */
+.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
