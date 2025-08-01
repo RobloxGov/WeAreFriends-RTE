@@ -124,7 +124,7 @@ body {
 }
 
 /* แดชบอร์ดเพจ */
-.dashboard-container {
+.dashboard-container, .quiz-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -551,4 +551,26 @@ footer i {
     .header-right {
         width: 100%;
     }
+}
+
+.quiz-category h2 {color: #0b7dda;}
+
+.quiz-categories {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+ul.quiz-list {
+    list-style: none;
+    text-decoration: none;
+}
+
+ul.quiz-list li a {
+    text-decoration: none;
+    color: #2196f3;
+}
+
+ul.quiz-list li a:hover {
+    text-decoration: underline;
 }
