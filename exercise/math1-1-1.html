@@ -125,24 +125,29 @@
             let html = `
                 <h2><i class="fas fa-question-circle"></i> ${quizData.quizTitle}</h2>
                 <p class="quiz-description">${quizData.quizDescription}</p>
-                <p class="quiz-instruction"><i class="fas fa-info-circle"></i> คำชี้แจง: ให้เลือกคำตอบที่ถูกต้องที่สุด</p>
+                <p class="quiz-instruction"><i class="fas fa-info-circle"></i> คำสั่ง: แบบทดสอบมี 5 ข้อ <br>วิธีตอบ: 1. การตอบห้ามเว้นวรรค ไม่อย่างนั้นระบบจะตรวจให้ผิด <br> 2. ดารตอบแบบเศษส่วนเขียนแบบ a/b ถ้ามีตัวแปรคูณอยู่ให้ ตอบ a/bx ได้เลย</p>
             `;
         
             // แสดงแต่ละคำถาม
-            quizData.questions.forEach((question, index) => {
+            quizData.questions.forEach((q, index) => {
                 html += `
-                    <div class="question" data-id="${question.id}">
+                    <div class="question" data-id="${q.id}">
                         <div class="question-text">
                             <span class="question-number">ข้อ ${index + 1}.</span>
-                            ${question.question}
+                            ${convertMathExpressions(q.question)}
                         </div>
                         <div class="options">
-                            ${question.options.map((option, optionIndex) => `
+                            ${q.type === 'text' ? `
+                                <div class="text-answer">
+                                    <input type="text" id="q${q.id}_answer" 
+                                           name="q${q.id}" placeholder="พิมพ์คำตอบของคุณที่นี่">
+                                </div>
+                            ` : q.options.map((opt, optIndex) => `
                                 <div class="option">
-                                    <input type="radio" id="q${question.id}_opt${optionIndex}" 
-                                           name="q${question.id}" value="${optionIndex}">
-                                    <label for="q${question.id}_opt${optionIndex}">
-                                        ${option}
+                                    <input type="radio" id="q${q.id}_opt${optIndex}" 
+                                           name="q${q.id}" value="${optIndex}">
+                                    <label for="q${q.id}_opt${optIndex}">
+                                        ${convertMathExpressions(opt)}
                                     </label>
                                 </div>
                             `).join('')}
