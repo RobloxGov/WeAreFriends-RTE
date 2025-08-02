@@ -208,26 +208,31 @@
         
             // ตรวจคำตอบแต่ละข้อ
             questions.forEach(q => {
-                const questionId = q.getAttribute('data-id');
-                const questionData = quizData.questions.find(item => item.id == questionId);
+                const questionId = parseInt(q.getAttribute('data-id'));
+                const questionData = quizData.questions.find(item => item.id === questionId);
                 
+                if (!questionData) {
+                    console.error('Question data not found for ID:', questionId);
+                    return;
+                }
+        
                 if (questionData.type === 'text') {
-                    // กรณีคำถามแบบพิมพ์คำตอบ
                     const input = q.querySelector('input[type="text"]');
-                    const userAnswer = input ? input.value.trim() : '';
-                    const isCorrect = userAnswer === questionData.answer;
+                    const userAnswer = input ? input.value.trim().toLowerCase() : '';
+                    const correctAnswer = questionData.answer.toLowerCase();
+                    
+                    // ตรวจสอบคำตอบแบบไม่คำนึงถึงรูปแบบการเขียน
+                    const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(correctAnswer);
                     
                     answers.push({
                         questionId,
                         userAnswer,
-                        isCorrect
+                        isCorrect,
+                        correctAnswer: questionData.answer
                     });
         
-                    if (isCorrect) {
-                        score++;
-                    }
+                    if (isCorrect) score++;
                 } else {
-                    // กรณีคำถามแบบเลือกคำตอบ
                     const selectedOption = q.querySelector('input[type="radio"]:checked');
                     const userAnswer = selectedOption ? parseInt(selectedOption.value) : null;
                     const isCorrect = userAnswer === questionData.answer;
@@ -235,12 +240,11 @@
                     answers.push({
                         questionId,
                         userAnswer,
-                        isCorrect
+                        isCorrect,
+                        correctAnswer: questionData.options[questionData.answer]
                     });
         
-                    if (isCorrect) {
-                        score++;
-                    }
+                    if (isCorrect) score++;
                 }
             });
         
@@ -249,28 +253,34 @@
             const percentScore = Math.round((score / totalQuestions) * 100);
         
             // แสดงสถานะกำลังส่งคะแนน
-            document.getElementById('submitQuiz').disabled = true;
-            document.getElementById('submitQuiz').innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังส่งคะแนน...';
+            const submitBtn = document.getElementById('submitQuiz');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังส่งคะแนน...';
         
             try {
-                // ส่งคะแนนไปยัง Google Sheets
                 await sendScoreToGoogleSheets(percentScore);
-                
-                // แสดงผลลัพธ์
                 showQuizResult(quizData, answers, score, totalQuestions, percentScore);
             } catch (error) {
                 console.error('Error submitting quiz:', error);
                 alert('เกิดข้อผิดพลาดในการส่งคะแนน: ' + error.message);
-                
-                // กลับไปสถานะปกติเมื่อเกิดข้อผิดพลาด
-                document.getElementById('submitQuiz').disabled = false;
-                document.getElementById('submitQuiz').innerHTML = 'ส่งคำตอบ <i class="fas fa-paper-plane"></i>';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'ส่งคำตอบ <i class="fas fa-paper-plane"></i>';
             }
+        }
+        
+        // ฟังก์ชันปรับรูปแบบคำตอบให้มาตรฐาน
+        function normalizeAnswer(answer) {
+            if (!answer) return '';
+            return answer
+                .replace(/\s+/g, '') // ลบช่องว่างทั้งหมด
+                .toLowerCase() // แปลงเป็นตัวพิมพ์เล็ก
+                .replace(/(\d+)\/(\d+)x/g, '($1/$2)x') // เศษส่วนแบบมี x
+                .replace(/(\d+)\/(\d+)/g, '($1/$2)'); // เศษส่วนทั่วไป
         }
         
         // 2. เรียกใช้ใน event listener แบบ async
         document.getElementById('submitQuiz').addEventListener('click', async function() {
-            const quizData = await loadQuizData(); // ถ้ามีการโหลดข้อมูล
+            const quizData = await loadQuiz();
             await submitQuiz(quizData);
         });
 
@@ -327,9 +337,12 @@
             `;
         
             quizData.questions.forEach((q, index) => {
-                const answer = answers.find(a => a.questionId == q.id);
-                const isCorrect = answer && answer.isCorrect;
-                const userAnswer = answer && answer.userAnswer !== null ? q.options[answer.userAnswer] : 'ไม่ได้ตอบ';
+                const answer = answers.find(a => a.questionId === q.id);
+                if (!answer) return;
+        
+                const isCorrect = answer.isCorrect;
+                const userAnswer = answer.userAnswer !== undefined ? answer.userAnswer : 'ไม่ได้ตอบ';
+                const correctAnswer = answer.correctAnswer || q.answer;
         
                 html += `
                     <div class="question-review ${isCorrect ? 'correct' : 'incorrect'}">
@@ -347,31 +360,16 @@
                         </div>
                         ${!isCorrect ? `
                             <div class="correct-answer">
-                                <p><strong>คำตอบที่ถูกต้อง:</strong> ${convertMathExpressions(q.options[q.answer])}</p>
-                                <p><strong>คำอธิบาย:</strong> ${convertMathExpressions(q.explanation)}</p>
+                                <p><strong>คำตอบที่ถูกต้อง:</strong> ${convertMathExpressions(correctAnswer)}</p>
+                                ${q.explanation ? `<p><strong>คำอธิบาย:</strong> ${q.explanation}</p>` : ''}
                             </div>
                         ` : ''}
                     </div>
                 `;
             });
         
-            html += `
-                    </div>
-                    <div class="result-actions">
-                        <a href="quiz.html" class="back-to-quiz-btn">
-                            <i class="fas fa-arrow-left"></i> กลับสู่หน้าหลักแบบทดสอบ
-                        </a>
-                    </div>
-                </div>
-            `;
-        
             quizQuestions.innerHTML = html;
-            document.querySelector('.quiz-submit').style.display = 'none';
-            
-            // เรียกใช้ MathJax เพื่อเรนเดอร์สมการคณิตศาสตร์ใหม่
-            if (typeof MathJax !== 'undefined') {
-                MathJax.typesetPromise();
-            }
+            MathJax.typesetPromise();
         }
         
         function checkTextAnswer(userAnswer, correctAnswer) {
