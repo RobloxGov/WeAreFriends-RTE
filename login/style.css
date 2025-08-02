@@ -575,3 +575,272 @@ ul.quiz-list li a:hover {
     text-decoration: underline;
 }
  */
+/* สไตล์สำหรับหน้าทำแบบทดสอบ */
+.quiz-test-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.quiz-test-content {
+    margin-top: 20px;
+}
+
+.quiz-info {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-info p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.quiz-info i {
+    margin-right: 10px;
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
+}
+
+.quiz-instruction {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.quiz-instruction i {
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+.question {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.question-text {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.question-number {
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.options {
+    display: grid;
+    gap: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+}
+
+.option input[type="radio"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+}
+
+.option label {
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 8px 0;
+}
+
+.quiz-submit {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.quiz-submit button {
+    padding: 12px 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.quiz-submit button:hover {
+    background-color: var(--primary-dark);
+}
+
+.quiz-submit button i {
+    margin-left: 8px;
+}
+
+/* สไตล์สำหรับผลลัพธ์ */
+.quiz-result {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.result-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.score-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.score-circle span {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.score-circle p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.score-detail {
+    font-size: 18px;
+    color: var(--secondary-color);
+}
+
+.answer-review {
+    margin-top: 30px;
+}
+
+.answer-review h3 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.question-review {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid;
+}
+
+.question-review.correct {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left-color: var(--success-color);
+}
+
+.question-review.incorrect {
+    background-color: rgba(244, 67, 54, 0.1);
+    border-left-color: var(--error-color);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.question-number {
+    font-weight: 500;
+}
+
+.answer-status {
+    font-weight: 500;
+}
+
+.answer-status i {
+    margin-right: 5px;
+}
+
+.correct .answer-status {
+    color: var(--success-color);
+}
+
+.incorrect .answer-status {
+    color: var(--error-color);
+}
+
+.user-answer, .correct-answer {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+}
+
+.correct-answer {
+    margin-top: 15px;
+}
+
+.result-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back-to-quiz-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-to-quiz-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.back-to-quiz-btn i {
+    margin-right: 8px;
+}
+
+/* MathJax styles */
+.MathJax {
+    font-size: 1.1em !important;
+}
+
+/* Loading and error states */
+.loading, .error {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+}
+
+.loading i, .error i {
+    margin-right: 10px;
+}
+
+.error {
+    color: var(--error-color);
+}
