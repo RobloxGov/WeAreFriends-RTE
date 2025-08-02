@@ -255,7 +255,7 @@
             // แสดงสถานะกำลังส่งคะแนน
             const submitBtn = document.getElementById('submitQuiz');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังส่งคะแนน...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ส่งคะแนนแล้ว';
         
             try {
                 await sendScoreToGoogleSheets(percentScore);
