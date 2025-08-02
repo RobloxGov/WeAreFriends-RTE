@@ -168,13 +168,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadQuiz();
         });
-        
-        // แปลงสัญลักษณ์คณิตศาสตร์ใน {} ให้เป็นรูปแบบ MathJax
-        // function convertMathExpressions(text) {
-        //     return text.replace(/\{(.*?)\}/g, function(match, expr) {
-        //         return `\\(${expr}\\)`;
-        //     });
-        // }
 
         // ส่งคำตอบ
         async function submitQuiz(quizData) {
@@ -225,29 +218,35 @@
 
         // ส่งคะแนนไปยัง Google Sheets
         async function sendScoreToGoogleSheets(score) {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzlULvBj7UiV7nCSxgi-ea-gDqIZxYDhJb-kJnnBamniqlh1qNIiMrtUsvt6Vgx4qA-GA/exec';
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwz6tkm3Xg4Jb7T1Z76pghKnDSBv7mEzTwxHvLkp0EM4MFo7-v-gdjJg6kJF_8OOqZVFg/exec';
             
-            const response = await fetch(scriptUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'save_score',
-                    quizName: studentData.quizName,
-                    studentId: studentData.id,
-                    studentName: studentData.name,
-                    studentNameBlur: studentData.nameBlur,
-                    score: score,
-                    timestamp: new Date().toISOString()
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to send score');
+            try {
+                // ใช้ fetch พร้อม mode 'no-cors' สำหรับการส่งข้อมูล
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', // ระบุ no-cors เพื่อหลีกเลี่ยงปัญหา CORS
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'save_score',
+                        quizName: studentData.quizName,
+                        studentId: studentData.id,
+                        studentName: studentData.name,
+                        studentNameBlur: studentData.nameBlur,
+                        score: score,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+        
+                // เมื่อใช้ no-cors เราจะไม่สามารถอ่าน response ได้
+                // แต่เชื่อว่าข้อมูลถูกส่งไปแล้ว
+                return {status: 'success'};
+                
+            } catch (error) {
+                console.error('Error submitting score:', error);
+                throw error;
             }
-
-            return await response.json();
         }
 
         // แสดงผลลัพธ์
