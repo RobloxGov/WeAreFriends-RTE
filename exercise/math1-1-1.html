@@ -157,14 +157,6 @@
             if (typeof MathJax !== 'undefined') {
                 MathJax.typesetPromise();
             }
-        }
-        
-        // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลดเสร็จ
-        document.addEventListener('DOMContentLoaded', function() {
-            loadQuiz();
-        });
-
-            quizQuestions.innerHTML = html;
 
             // ตั้งค่าการส่งคำตอบ
             document.getElementById('submitQuiz').addEventListener('click', function() {
@@ -172,6 +164,13 @@
             });
         }
 
+        }
+        
+        // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuiz();
+        });
+        
         // แปลงสัญลักษณ์คณิตศาสตร์ใน {} ให้เป็นรูปแบบ MathJax
         // function convertMathExpressions(text) {
         //     return text.replace(/\{(.*?)\}/g, function(match, expr) {
