@@ -168,7 +168,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadQuiz();
         });
-
+        
+        // ฟังก์ชันแปลงสัญลักษณ์คณิตศาสตร์ใน {} ให้เป็นรูปแบบ MathJax
+        function convertMathExpressions(text) {
+            if (!text) return '';
+            return text.replace(/\{(.*?)\}/g, function(match, expr) {
+                return `\\(${expr}\\)`;
+            });
+        }
         // ส่งคำตอบ
         async function submitQuiz(quizData) {
             const questions = document.querySelectorAll('.question');
@@ -267,12 +274,12 @@
                     <div class="answer-review">
                         <h3><i class="fas fa-list-ol"></i> ตรวจสอบคำตอบ</h3>
             `;
-
+        
             quizData.questions.forEach((q, index) => {
                 const answer = answers.find(a => a.questionId == q.id);
                 const isCorrect = answer && answer.isCorrect;
                 const userAnswer = answer && answer.userAnswer !== null ? q.options[answer.userAnswer] : 'ไม่ได้ตอบ';
-
+        
                 html += `
                     <div class="question-review ${isCorrect ? 'correct' : 'incorrect'}">
                         <div class="question-header">
@@ -296,7 +303,7 @@
                     </div>
                 `;
             });
-
+        
             html += `
                     </div>
                     <div class="result-actions">
@@ -306,9 +313,14 @@
                     </div>
                 </div>
             `;
-
+        
             quizQuestions.innerHTML = html;
             document.querySelector('.quiz-submit').style.display = 'none';
+            
+            // เรียกใช้ MathJax เพื่อเรนเดอร์สมการคณิตศาสตร์ใหม่
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
         }
     </script>
 </body>
