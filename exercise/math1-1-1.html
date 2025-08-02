@@ -100,20 +100,25 @@
         });
 
         // ฟังก์ชันโหลดข้อสอบ
-        // ฟังก์ชันโหลดแบบทดสอบ
         async function loadQuiz() {
             try {
                 const response = await fetch('math1-1-1.json');
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const quizData = await response.json();
                 displayQuiz(quizData);
             } catch (error) {
+                // แสดง error ใน console เพียงครั้งเดียว
                 console.error('Error loading quiz:', error);
-                document.getElementById('quizQuestions').innerHTML = `
+                
+                // แสดงข้อความ error ให้ผู้ใช้เห็น
+                const quizQuestions = document.getElementById('quizQuestions');
+                quizQuestions.innerHTML = `
                     <div class="error">
-                        <i class="fas fa-exclamation-triangle"></i> เกิดข้อผิดพลาดในการโหลดข้อสอบ
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        เกิดข้อผิดพลาดในการโหลดข้อสอบ: ${error.message}
+                        <button onclick="location.reload()">ลองอีกครั้ง</button>
                     </div>
                 `;
             }
@@ -182,33 +187,36 @@
             });
         }
         // ส่งคำตอบ
-        async function submitQuiz(quizData) {
+        function submitQuiz(quizData) {
             const questions = document.querySelectorAll('.question');
             let score = 0;
             let answers = [];
-
+        
             questions.forEach(q => {
                 const questionId = q.getAttribute('data-id');
-                const selectedOption = q.querySelector('input[type="radio"]:checked');
                 const questionData = quizData.questions.find(q => q.id == questionId);
-
-                if (selectedOption) {
-                    const userAnswer = parseInt(selectedOption.value);
-                    answers.push({
-                        questionId,
-                        userAnswer,
-                        isCorrect: userAnswer === questionData.answer
-                    });
-
-                    if (userAnswer === questionData.answer) {
-                        score++;
-                    }
+                let userAnswer, isCorrect;
+        
+                if (questionData.type === 'text') {
+                    // กรณีคำถามแบบพิมพ์คำตอบ
+                    const input = q.querySelector('input[type="text"]');
+                    userAnswer = input ? input.value.trim() : '';
+                    isCorrect = userAnswer === questionData.answer;
                 } else {
-                    answers.push({
-                        questionId,
-                        userAnswer: null,
-                        isCorrect: false
-                    });
+                    // กรณีคำถามแบบเลือกคำตอบ
+                    const selectedOption = q.querySelector('input[type="radio"]:checked');
+                    userAnswer = selectedOption ? parseInt(selectedOption.value) : null;
+                    isCorrect = userAnswer === questionData.answer;
+                }
+        
+                answers.push({
+                    questionId,
+                    userAnswer,
+                    isCorrect
+                });
+        
+                if (isCorrect) {
+                    score++;
                 }
             });
 
