@@ -134,7 +134,7 @@
                   <span id="quizInstructions"></span>
                 </p>
             `;
-        
+            
             // แสดงแต่ละคำถาม
             quizData.questions.forEach((q, index) => {
                 html += `
@@ -162,6 +162,8 @@
                     </div>
                 `;
             });
+        
+            document.getElementById('quizInstructions').innerHTML = quizData.instructions;
         
             quizQuestions.innerHTML = html;
             
@@ -382,7 +384,6 @@
           return formattedUser === formattedCorrect;
         }
         
-        document.getElementById('quizInstructions').innerHTML = quizData.instructions;
     </script>
 </body>
 </html>
