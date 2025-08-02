@@ -102,50 +102,11 @@
         // ฟังก์ชันโหลดข้อสอบ
         async function loadQuiz() {
             try {
-                // ตัวอย่างข้อมูลข้อสอบ (ในทางปฏิบัติควรดึงจาก API)
-                const quizData = {
-                    title: "แบบทดสอบเรื่องฟังก์ชันเส้นตรง",
-                    questions: [
-                        {
-                            id: 1,
-                            question: "ถ้า \{f(x) = 2x + 3\} แล้ว \{f(4)\} มีค่าเท่าใด?",
-                            options: [
-                                "5",
-                                "11",
-                                "8",
-                                "14"
-                            ],
-                            answer: 1, // ตำแหน่งของคำตอบที่ถูกต้อง (0-based)
-                            explanation: "แทนค่า \{x = 4\} ในฟังก์ชัน \{f(x) = 2x + 3\} จะได้ \{f(4) = 2(4) + 3 = 8 + 3 = 11\}"
-                        },
-                        {
-                            id: 2,
-                            question: "เส้นตรงใดต่อไปนี้มีความชันเป็น \{m = -2\}?",
-                            options: [
-                                "\{y = 2x + 5\}",
-                                "\{y = -2x + 3\}",
-                                "\{y = \\frac{1}{2}x - 1\}",
-                                "\{y = -\\frac{1}{2}x + 4\}"
-                            ],
-                            answer: 1,
-                            explanation: "รูปแบบสมการเส้นตรงคือ \{y = mx + c\} โดย \{m\} คือความชัน ดังนั้นเส้นตรงที่มีความชัน \{m = -2\} คือ \{y = -2x + 3\}"
-                        },
-                        {
-                            id: 3,
-                            question: "จงหาความชันของเส้นตรงที่ผ่านจุด \{(1, 3)\} และ \{(4, 9)\}",
-                            options: [
-                                "1",
-                                "2",
-                                "3",
-                                "4"
-                            ],
-                            answer: 1,
-                            explanation: "สูตรความชัน \{m = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{9 - 3}{4 - 1} = \\frac{6}{3} = 2\}"
-                        }
-                    ]
-                };
-
-                // แสดงข้อสอบ
+                const response = await fetch('math1-1-1.json');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const quizData = await response.json();
                 displayQuiz(quizData);
             } catch (error) {
                 console.error('Error loading quiz:', error);
