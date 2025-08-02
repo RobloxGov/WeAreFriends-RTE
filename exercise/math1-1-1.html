@@ -193,54 +193,79 @@
             });
         }
         // ส่งคำตอบ
-        function submitQuiz(quizData) {
+        // 1. ประกาศฟังก์ชัน submitQuiz เป็น async
+        async function submitQuiz(quizData) {
             const questions = document.querySelectorAll('.question');
             let score = 0;
             let answers = [];
         
+            // ตรวจคำตอบแต่ละข้อ
             questions.forEach(q => {
                 const questionId = q.getAttribute('data-id');
-                const questionData = quizData.questions.find(q => q.id == questionId);
-                let userAnswer, isCorrect;
-        
+                const questionData = quizData.questions.find(item => item.id == questionId);
+                
                 if (questionData.type === 'text') {
                     // กรณีคำถามแบบพิมพ์คำตอบ
                     const input = q.querySelector('input[type="text"]');
-                    userAnswer = input ? input.value.trim() : '';
-                    isCorrect = userAnswer === questionData.answer;
+                    const userAnswer = input ? input.value.trim() : '';
+                    const isCorrect = userAnswer === questionData.answer;
+                    
+                    answers.push({
+                        questionId,
+                        userAnswer,
+                        isCorrect
+                    });
+        
+                    if (isCorrect) {
+                        score++;
+                    }
                 } else {
                     // กรณีคำถามแบบเลือกคำตอบ
                     const selectedOption = q.querySelector('input[type="radio"]:checked');
-                    userAnswer = selectedOption ? parseInt(selectedOption.value) : null;
-                    isCorrect = userAnswer === questionData.answer;
-                }
+                    const userAnswer = selectedOption ? parseInt(selectedOption.value) : null;
+                    const isCorrect = userAnswer === questionData.answer;
+                    
+                    answers.push({
+                        questionId,
+                        userAnswer,
+                        isCorrect
+                    });
         
-                answers.push({
-                    questionId,
-                    userAnswer,
-                    isCorrect
-                });
-        
-                if (isCorrect) {
-                    score++;
+                    if (isCorrect) {
+                        score++;
+                    }
                 }
             });
-
+        
             // คำนวณคะแนน
             const totalQuestions = quizData.questions.length;
             const percentScore = Math.round((score / totalQuestions) * 100);
-
-            // ส่งคะแนนไปยัง Google Sheets
+        
+            // แสดงสถานะกำลังส่งคะแนน
+            document.getElementById('submitQuiz').disabled = true;
+            document.getElementById('submitQuiz').innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังส่งคะแนน...';
+        
             try {
+                // ส่งคะแนนไปยัง Google Sheets
                 await sendScoreToGoogleSheets(percentScore);
                 
                 // แสดงผลลัพธ์
                 showQuizResult(quizData, answers, score, totalQuestions, percentScore);
             } catch (error) {
                 console.error('Error submitting quiz:', error);
-                alert('เกิดข้อผิดพลาดในการส่งคะแนน โปรดลองอีกครั้ง');
+                alert('เกิดข้อผิดพลาดในการส่งคะแนน: ' + error.message);
+                
+                // กลับไปสถานะปกติเมื่อเกิดข้อผิดพลาด
+                document.getElementById('submitQuiz').disabled = false;
+                document.getElementById('submitQuiz').innerHTML = 'ส่งคำตอบ <i class="fas fa-paper-plane"></i>';
             }
         }
+        
+        // 2. เรียกใช้ใน event listener แบบ async
+        document.getElementById('submitQuiz').addEventListener('click', async function() {
+            const quizData = await loadQuizData(); // ถ้ามีการโหลดข้อมูล
+            await submitQuiz(quizData);
+        });
 
         // ส่งคะแนนไปยัง Google Sheets
         async function sendScoreToGoogleSheets(score) {
