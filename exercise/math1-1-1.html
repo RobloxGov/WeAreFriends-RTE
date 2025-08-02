@@ -130,7 +130,9 @@
             let html = `
                 <h2><i class="fas fa-question-circle"></i> ${quizData.quizTitle}</h2>
                 <p class="quiz-description">${quizData.quizDescription}</p>
-                <p class="quiz-instruction"><i class="fas fa-info-circle"></i> คำสั่ง: แบบทดสอบมี 5 ข้อ <br>วิธีตอบ: 1. การตอบห้ามเว้นวรรค ไม่อย่างนั้นระบบจะตรวจให้ผิด <br> 2. ดารตอบแบบเศษส่วนเขียนแบบ a/b ถ้ามีตัวแปรคูณอยู่ให้ ตอบ a/bx ได้เลย</p>
+                <p class="quiz-instruction"><i class="fas fa-info-circle"></i>
+                  <span id="quizInstructions"></span>
+                </p>
             `;
         
             // แสดงแต่ละคำถาม
@@ -169,8 +171,12 @@
             }
 
             // ตั้งค่าการส่งคำตอบ
-            document.getElementById('submitQuiz').addEventListener('click', function() {
-                submitQuiz(quizData);
+            document.getElementById('submitQuiz').addEventListener('click', async function() {
+                try {
+                    await submitQuiz(quizData);
+                } catch (error) {
+                    console.error('Error submitting quiz:', error);
+                }
             });
         }
         
@@ -335,6 +341,23 @@
                 MathJax.typesetPromise();
             }
         }
+        
+        function checkTextAnswer(userAnswer, correctAnswer) {
+          // ลบช่องว่างทั้งหมดและแปลงเป็นตัวพิมพ์เล็ก
+          const normalizedUser = userAnswer.replace(/\s+/g, '').toLowerCase();
+          const normalizedCorrect = correctAnswer.replace(/\s+/g, '').toLowerCase();
+          
+          // ตรวจสอบรูปแบบเศษส่วน
+          const fractionRegex = /(\d+)\/(\d+)x/g;
+          
+          // แปลงรูปแบบเศษส่วนให้ตรงกัน (1/2x => (1/2)x)
+          const formattedUser = normalizedUser.replace(fractionRegex, '($1/$2)x');
+          const formattedCorrect = normalizedCorrect.replace(fractionRegex, '($1/$2)x');
+          
+          return formattedUser === formattedCorrect;
+        }
+        
+        document.getElementById('quizInstructions').innerHTML = quizData.instructions;
     </script>
 </body>
 </html>
