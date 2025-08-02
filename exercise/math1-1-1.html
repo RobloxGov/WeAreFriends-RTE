@@ -101,18 +101,18 @@
 
         // ฟังก์ชันโหลดข้อสอบ
         async function loadQuiz() {
+            let quizData; // ประกาศไว้ก่อน เพื่อใช้ได้ทั้ง try และนอก try
+        
             try {
                 const response = await fetch('math1-1-1.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const quizData = await response.json();
+        
+                quizData = await response.json();
                 displayQuiz(quizData);
             } catch (error) {
-                // แสดง error ใน console เพียงครั้งเดียว
                 console.error('Error loading quiz:', error);
-                
-                // แสดงข้อความ error ให้ผู้ใช้เห็น
                 const quizQuestions = document.getElementById('quizQuestions');
                 quizQuestions.innerHTML = `
                     <div class="error">
@@ -121,8 +121,15 @@
                         <button onclick="location.reload()">ลองอีกครั้ง</button>
                     </div>
                 `;
+                return; // จบ function ทันทีไม่ให้รันบรรทัดต่อไป
             }
+        
+            // ถ้ามาถึงตรงนี้ แสดงว่าโหลด quizData สำเร็จแล้ว
+                setTimeout(() => {
+                    document.getElementById('quizInstructions').innerHTML = quizData.instructions;
+                }, 3000);
         }
+
         
         // ฟังก์ชันแสดงแบบทดสอบ
         function displayQuiz(quizData) {
@@ -162,8 +169,6 @@
                     </div>
                 `;
             });
-        
-            document.getElementById('quizInstructions').innerHTML = quizData.instructions;
         
             quizQuestions.innerHTML = html;
             
