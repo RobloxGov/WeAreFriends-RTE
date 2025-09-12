@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             <li><a href="#">สมาชิก</a></li>
                             <li><a href="#">ตารางเรียน/สอบ</a></li>
                             <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
-                            <li><a href="#">ปฏิทิน</a></li>
+                            <li><a href="https://www.reg.kmitl.ac.th/educalendar/2568/th-2.pdf">ปฏิทิน</a></li>
                         </ul>
                     </li>
                     <li>
@@ -26,14 +26,14 @@ window.addEventListener("DOMContentLoaded", () => {
                         <ul class="dropdown-menu">
                             <li><a href="#">ลงทะเบียนเรียน</a></li>
                             <li><a href="#">ตารางเรียน/สอบ</a></li>
-                            <li><a href="#">REG KMITL</a></li>
+                            <li><a href="https://www.reg.kmitl.ac.th/">REG KMITL</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">ผู้บริหาร</a>
                         <ul class="dropdown-menu">
                             <li><a href="/executive/info-executive">คณะกรรมการบริหาร</a></li>
-                            <li><a href="#">โครงสร้างองค์กร</a></li>
+                            <li><a href="/executive/org">โครงสร้างองค์กร</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -63,7 +63,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     <li><a href="#">สมาชิก</a></li>
                     <li><a href="#">ตารางเรียน/สอบ</a></li>
                     <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
-                    <li><a href="#">ปฏิทิน</a></li>
+                    <li><a href="https://www.reg.kmitl.ac.th/educalendar/2568/th-2.pdf">ปฏิทิน</a></li>
                 </ul>
             </li>
             <li>
@@ -71,18 +71,18 @@ window.addEventListener("DOMContentLoaded", () => {
                 <ul class="mobile-dropdown">
                     <li><a href="#">ลงทะเบียนเรียน</a></li>
                     <li><a href="#">ตารางเรียน/สอบ</a></li>
-                    <li><a href="#">REG KMITL</a></li>
+                    <li><a href="https://www.reg.kmitl.ac.th/">REG KMITL</a></li>
                 </ul>
             </li>
             <li>
                 <button class="mobile-dropdown-btn">ผู้บริหาร</button>
                 <ul class="mobile-dropdown">
-                    <li><a href="#">คณะกรรมการบริหาร</a></li>
-                    <li><a href="#">โครงสร้างองค์กร</a></li>
+                    <li><a href="/executive/info-executive">คณะกรรมการบริหาร</a></li>
+                    <li><a href="/executive/org">โครงสร้างองค์กร</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"
+                <a href="/login"
                     style="display: block; background-color: #f16322; color: white; text-align: center; margin: 10px; border-radius: 5px; padding: 10px;">
                     เข้าสู่ระบบ(สมาชิก RTE13)
                 </a>
