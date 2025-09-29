@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>นับถอยหลังวันสอบ</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      text-align: center;
+      background: #fffaf5;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 400px;
+      color: #333;
+    }
+    h1 {
+      color: #ff6600;
+    }
+    #countdown {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+    #nextExam {
+      font-size: 1.2em;
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:hover {
+      background-color: #e65500;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 80%;
+      display: none;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+    }
+    th {
+      background: #ff6600;
+      color: white;
+    }
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      background: url('https://rte-kmitl.pages.dev/img/KMITL_Sublogo.svg.png') no-repeat center;
+      background-size: contain;
+      opacity: 0.08;   /* ปรับความโปร่งใส */
+      transform: translate(-50%, -50%);
+      z-index: 9999;   /* ให้อยู่หน้าสุด */
+      pointer-events: none; /* ป้องกันบังการกดปุ่ม/ลิงก์ */
+    }
+
+  </style>
+</head>
+<body>
+  <!-- ลายน้ำ -->
+  <div class="watermark"></div>
+
+  <h1>⏳ นับถอยหลังวันสอบปลายภาค</h1>
+  <div id="countdown">กำลังโหลด...</div>
+  <div id="nextExam">-</div>
+  <button onclick="toggleTable()">📅 ดูตารางสอบทั้งหมด</button>
+
+  <table id="examTable">
+    <thead>
+      <tr>
+        <th>วันสอบ</th>
+        <th>เวลา</th>
+        <th>รหัสวิชา</th>
+        <th>ชื่อวิชา</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>อ. 21 ต.ค. 2568</td><td>09:30 - 12:30</td><td>01006001</td><td>ENGINEERING MATHEMATICS 1</td></tr>
+      <tr><td>พ. 22 ต.ค. 2568</td><td>09:30 - 12:30</td><td>01006012</td><td>COMPUTER PROGRAMMING</td></tr>
+      <tr><td>พ. 22 ต.ค. 2568</td><td>13:30 - 16:30</td><td>01006015</td><td>ENGINEERING DRAWING</td></tr>
+      <tr><td>ศ. 24 ต.ค. 2568</td><td>09:30 - 12:30</td><td>01006024</td><td>GENERAL CHEMISTRY 2</td></tr>
+      <tr><td>จ. 27 ต.ค. 2568</td><td>09:30 - 12:30</td><td>01006010</td><td>ENGINEERING MECHANICS</td></tr>
+      <tr><td>อ. 28 ต.ค. 2568</td><td>09:30 - 12:30</td><td>01006020</td><td>GENERAL PHYSICS 1</td></tr>
+      <tr><td>พฤ. 30 ต.ค. 2568</td><td>09:30 - 11:30</td><td>01006021</td><td>GENERAL PHYSICS LABORATORY 1</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const exams = [
+      { date: "2025-10-21T09:30:00", subject: "ENGINEERING MATHEMATICS 1" },
+      { date: "2025-10-22T09:30:00", subject: "COMPUTER PROGRAMMING" },
+      { date: "2025-10-22T13:30:00", subject: "ENGINEERING DRAWING" },
+      { date: "2025-10-24T09:30:00", subject: "GENERAL CHEMISTRY 2" },
+      { date: "2025-10-27T09:30:00", subject: "ENGINEERING MECHANICS" },
+      { date: "2025-10-28T09:30:00", subject: "GENERAL PHYSICS 1" },
+      { date: "2025-10-30T09:30:00", subject: "GENERAL PHYSICS LABORATORY 1" }
+    ];
+
+    function getNextExam() {
+      const now = new Date();
+      return exams.find(e => new Date(e.date) > now);
+    }
+
+    function updateCountdown() {
+      const exam = getNextExam();
+      if (!exam) {
+        document.getElementById("countdown").innerText = "🎉 สอบเสร็จแล้ว!";
+        document.getElementById("nextExam").innerText = "";
+        return;
+      }
+
+      const now = new Date().getTime();
+      const examDate = new Date(exam.date).getTime();
+      const distance = examDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerText =
+        `${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+      document.getElementById("nextExam").innerText =
+        `📖 สอบวิชาถัดไป: ${exam.subject} (${new Date(exam.date).toLocaleString("th-TH")})`;
+    }
+
+    function toggleTable() {
+      const table = document.getElementById("examTable");
+      table.style.display = (table.style.display === "none" || table.style.display === "") ? "table" : "none";
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
