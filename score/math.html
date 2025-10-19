@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบคำนวณเกรดอิงกลุ่มมาตรฐาน</title>
+    <style>
+        :root {
+            --primary-orange: #F9A826;
+            --dark-orange: #E87A00;
+            --light-orange: #FFD8A6;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-orange), var(--dark-orange));
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary-orange);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(249, 168, 38, 0.2);
+        }
+        
+        .btn {
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-section {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .grade-table th, .grade-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .grade-table th {
+            background-color: var(--primary-orange);
+            color: var(--white);
+        }
+        
+        .grade-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+        
+        .user-result {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--light-orange);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .user-result h3 {
+            color: var(--dark-orange);
+            margin-bottom: 15px;
+        }
+        
+        .grade-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-orange);
+            margin: 10px 0;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            flex: 1;
+            background-color: var(--light-orange);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 0 10px;
+            text-align: center;
+        }
+        
+        .stat-box:first-child {
+            margin-left: 0;
+        }
+        
+        .stat-box:last-child {
+            margin-right: 0;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-orange);
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .difficulty-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background-color: #f0f0f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .difficulty-btn.active {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--dark-orange);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .stats {
+                flex-direction: column;
+            }
+            
+            .stat-box {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ระบบคำนวณเกรดอิงกลุ่มมาตรฐาน</h1>
+            <p class="subtitle">รายวิชาคณิตศาสตร์วิศวกรรม - สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+        </header>
+        
+        <div class="card">
+            <h2>กรอกข้อมูลเพื่อคำนวณเกรด</h2>
+            <form id="gradeForm">
+                <div class="form-group">
+                    <label for="studentId">รหัสนักศึกษา</label>
+                    <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษา" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="examScore">จำนวนข้อที่ทำได้ (0-10 ข้อ)</label>
+                    <input type="number" id="examScore" min="0" max="10" placeholder="0-10" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>เลือกระดับความยาก</label>
+                    <div class="difficulty-selector">
+                        <div class="difficulty-btn" data-level="easy">ง่าย (+17.5)</div>
+                        <div class="difficulty-btn active" data-level="normal">ปกติ (+21)</div>
+                        <div class="difficulty-btn" data-level="hard">ยาก (+24.5)</div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">คำนวณเกรด</button>
+            </form>
+        </div>
+        
+        <div class="loading" id="loading" style="display: none;">
+            <p>กำลังโหลดข้อมูล...</p>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <div class="card">
+                <h2>เกณฑ์การให้เกรด</h2>
+                <table class="grade-table" id="gradeTable">
+                    <thead>
+                        <tr>
+                            <th>เกรด</th>
+                            <th>A</th>
+                            <th>B+</th>
+                            <th>B</th>
+                            <th>C+</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>F</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeCriteriaBody">
+                        <!-- เกณฑ์คะแนนจะถูกคำนวณและแสดงที่นี่ -->
+                    </tbody>
+                </table>
+                
+                <div class="user-result">
+                    <h3>ผลการคำนวณเกรด</h3>
+                    <p id="studentInfo"></p>
+                    <div class="grade-display" id="finalGrade"></div>
+                    <p id="totalScore"></p>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">คะแนนเก็บ</div>
+                        <div class="stat-value" id="assignmentScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">คะแนนสอบ</div>
+                        <div class="stat-value" id="examScoreValue">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">คะแนนรวม</div>
+                        <div class="stat-value" id="totalScoreValue">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>ระบบคำนวณเกรดอิงกลุ่มมาตรฐาน - พัฒนาโดยวิศวกรรมขนส่งทางราง</p>
+        </footer>
+    </div>
+
+    <script>
+        // ข้อมูลสถิติพื้นฐาน
+        const baseMean = 53.1000;
+        const sd = 6.2044;
+        
+        // ข้อมูลคะแนนเพิ่มตามระดับความยาก
+        const difficultyBonus = {
+            'easy': 17.5,
+            'normal': 21,
+            'hard': 24.5
+        };
+        
+        // ตั้งค่าระดับความยากเริ่มต้น
+        let currentDifficulty = 'normal';
+        
+        // ฟังก์ชันคำนวณเกณฑ์คะแนนตามระดับความยาก
+        function calculateGradeCriteria(difficulty) {
+            const bonus = difficultyBonus[difficulty];
+            const newMean = baseMean + bonus;
+            
+            return {
+                'A': newMean + 1.5 * sd,
+                'B+': newMean + 1 * sd,
+                'B': newMean + 0.5 * sd,
+                'C+': newMean,
+                'C': newMean - 0.5 * sd,
+                'D': newMean - 1 * sd,
+                'F': newMean - 1.5 * sd
+            };
+        }
+        
+        // ฟังก์ชันแสดงเกณฑ์คะแนนในตาราง
+        function displayGradeCriteria(criteria) {
+            const tableBody = document.getElementById('gradeCriteriaBody');
+            tableBody.innerHTML = '';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>คะแนน</td>
+                <td>${criteria['A'].toFixed(2)} ขึ้นไป</td>
+                <td>${criteria['B+'].toFixed(2)} - ${(criteria['A'] - 0.01).toFixed(2)}</td>
+                <td>${criteria['B'].toFixed(2)} - ${(criteria['B+'] - 0.01).toFixed(2)}</td>
+                <td>${criteria['C+'].toFixed(2)} - ${(criteria['B'] - 0.01).toFixed(2)}</td>
+                <td>${criteria['C'].toFixed(2)} - ${(criteria['C+'] - 0.01).toFixed(2)}</td>
+                <td>${criteria['D'].toFixed(2)} - ${(criteria['C'] - 0.01).toFixed(2)}</td>
+                <td>ต่ำกว่า ${criteria['D'].toFixed(2)}</td>
+            `;
+            tableBody.appendChild(row);
+        }
+        
+        // ฟังก์ชันคำนวณเกรดจากคะแนนรวม
+        function calculateGrade(totalScore, criteria) {
+            if (totalScore >= criteria['A']) {
+                return 'A';
+            } else if (totalScore >= criteria['B+']) {
+                return 'B+';
+            } else if (totalScore >= criteria['B']) {
+                return 'B';
+            } else if (totalScore >= criteria['C+']) {
+                return 'C+';
+            } else if (totalScore >= criteria['C']) {
+                return 'C';
+            } else if (totalScore >= criteria['D']) {
+                return 'D';
+            } else {
+                return 'F';
+            }
+        }
+        
+        // จัดการกับปุ่มเลือกระดับความยาก
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentDifficulty = this.getAttribute('data-level');
+                
+                // อัปเดตเกณฑ์คะแนนเมื่อเปลี่ยนระดับความยาก
+                const criteria = calculateGradeCriteria(currentDifficulty);
+                displayGradeCriteria(criteria);
+            });
+        });
+        
+        // จัดการฟอร์มคำนวณเกรด
+        document.getElementById('gradeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const studentId = document.getElementById('studentId').value;
+            const examQuestions = parseInt(document.getElementById('examScore').value);
+            
+            // แสดงสถานะกำลังโหลด
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            
+            try {
+                // โหลดข้อมูลจาก users.json
+                const response = await fetch('users.json');
+                if (!response.ok) {
+                    throw new Error('ไม่สามารถโหลดข้อมูลนักเรียนได้');
+                }
+                
+                const users = await response.json();
+                
+                // ค้นหาข้อมูลนักเรียน
+                const student = users[studentId];
+                
+                if (!student) {
+                    alert('ไม่พบรหัสนักศึกษานี้ในระบบ');
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('submitBtn').disabled = false;
+                    return;
+                }
+                
+                // คำนวณคะแนนสอบ (ข้อละ 3.5 คะแนน)
+                const examScore = examQuestions * 3.5;
+                
+                // คำนวณเกณฑ์คะแนนตามระดับความยาก
+                const criteria = calculateGradeCriteria(currentDifficulty);
+                
+                // คำนวณคะแนนรวม
+                const totalScore = student.assignmentScore + examScore;
+                
+                // คำนวณเกรด
+                const grade = calculateGrade(totalScore, criteria);
+                
+                // แสดงผลลัพธ์
+                document.getElementById('studentInfo').textContent = 
+                    `${student.name} (รหัส ${studentId})`;
+                document.getElementById('finalGrade').textContent = grade;
+                document.getElementById('totalScore').textContent = 
+                    `คะแนนรวม: ${totalScore.toFixed(2)} คะแนน`;
+                
+                document.getElementById('assignmentScore').textContent = student.assignmentScore;
+                document.getElementById('examScoreValue').textContent = examScore.toFixed(1);
+                document.getElementById('totalScoreValue').textContent = totalScore.toFixed(2);
+                
+                // แสดงเกณฑ์คะแนน
+                displayGradeCriteria(criteria);
+                
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // เลื่อนไปยังส่วนผลลัพธ์
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+        
+        // แสดงเกณฑ์คะแนนเริ่มต้นเมื่อโหลดหน้าเว็บ
+        document.addEventListener('DOMContentLoaded', function() {
+            const criteria = calculateGradeCriteria(currentDifficulty);
+            displayGradeCriteria(criteria);
+        });
+    </script>
+</body>
+</html>
