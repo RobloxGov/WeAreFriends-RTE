@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบคำนวณเกรดภาคการศึกษาที่ 1</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #ff6600;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ff6600;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .summary-box {
+            background-color: #fff8f0;
+            border-left: 4px solid #ff6600;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .summary-box h3 {
+            margin-top: 0;
+            color: #ff6600;
+        }
+        .note {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid #4a90e2;
+        }
+        .note h3 {
+            margin-top: 0;
+            color: #4a90e2;
+        }
+        .calculate-btn {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        .calculate-btn:hover {
+            background-color: #e55a00;
+        }
+        .result {
+            font-weight: bold;
+            font-size: 18px;
+            color: #ff6600;
+        }
+        .subject-code-90 {
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>ระบบคำนวณเกรดภาคการศึกษาที่ 1</h1>
+    
+    <div class="container">
+        <h2>รายวิชาภาคการศึกษาที่ 1</h2>
+        <table id="gradeTable">
+            <thead>
+                <tr>
+                    <th>รหัสวิชา</th>
+                    <th>ชื่อวิชา</th>
+                    <th>หน่วยกิต</th>
+                    <th>เกรด</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1006001</td>
+                    <td>ENGINEERING MATHEMATICS 1</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1006010</td>
+                    <td>ENGINEERING MECHANICS</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1006012</td>
+                    <td>COMPUTER PROGRAMMING</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1006015</td>
+                    <td>ENGINEERING DRAWING</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1006020</td>
+                    <td>GENERAL PHYSICS 1</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1006021</td>
+                    <td>GENERAL PHYSICS LABORATORY 1</td>
+                    <td>1</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1006024</td>
+                    <td>GENERAL CHEMISTRY</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="4">A</option>
+                            <option value="3.5">B+</option>
+                            <option value="3">B</option>
+                            <option value="2.5">C+</option>
+                            <option value="2">C</option>
+                            <option value="1.5">D+</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="subject-code-90">
+                    <td>90641007</td>
+                    <td>DIGITAL CITIZEN</td>
+                    <td>3</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="S">S</option>
+                            <option value="U">U</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="subject-code-90">
+                    <td>90641008</td>
+                    <td>INTRODUCTION TO ENGLISH COMMUNICATION SKILLS</td>
+                    <td>0</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="S">S</option>
+                            <option value="U">U</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="subject-code-90">
+                    <td>90642036</td>
+                    <td>PRE-ACTIVITIES FOR ENGINEERS</td>
+                    <td>1</td>
+                    <td>
+                        <select class="grade-select">
+                            <option value="">-- เลือกเกรด --</option>
+                            <option value="S">S</option>
+                            <option value="U">U</option>
+                            <option value="I">I</option>
+                            <option value="W">W</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <button class="calculate-btn" onclick="calculateGrades()">คำนวณเกรด</button>
+        
+        <div class="summary">
+            <div class="summary-box">
+                <h3>CA (หน่วยกิตทั้งหมด)</h3>
+                <p id="ca" class="result">-</p>
+            </div>
+            <div class="summary-box">
+                <h3>CP (หน่วยกิตที่ผ่าน)</h3>
+                <p id="cp" class="result">-</p>
+            </div>
+            <div class="summary-box">
+                <h3>CD (หน่วยกิตที่ตก/ยังไม่ผ่าน)</h3>
+                <p id="cd" class="result">-</p>
+            </div>
+            <div class="summary-box">
+                <h3>GP (คะแนนคุณภาพรวม)</h3>
+                <p id="gp" class="result">-</p>
+            </div>
+            <div class="summary-box">
+                <h3>GPA</h3>
+                <p id="gpa" class="result">-</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="note">
+        <h3>หมายเหตุเกรดพิเศษ</h3>
+        <ul>
+            <li><strong>S</strong> - หมายถึง ผ่าน (Satisfactory) ไม่นำไปคำนวณในเกรดเฉลี่ย</li>
+            <li><strong>U</strong> - หมายถึง ไม่ผ่าน (Unsatisfactory) ไม่นำไปคำนวณในเกรดเฉลี่ย</li>
+            <li><strong>I</strong> - หมายถึง ไม่สมบูรณ์ (Incomplete) ยังไม่ได้รับเกรด</li>
+            <li><strong>W</strong> - หมายถึง ถอนวิชา (Withdrawal) ไม่นำไปคำนวณในเกรดเฉลี่ย</li>
+            <li><strong>วิชารหัสขึ้นต้น 90</strong> - ใช้ระบบเกรด S/U เท่านั้น</li>
+        </ul>
+    </div>
+
+    <script>
+        function calculateGrades() {
+            let totalCredits = 0; // CA
+            let passedCredits = 0; // CP
+            let deficitCredits = 0; // CD
+            let totalGradePoints = 0; // GP
+            let totalCalculatedCredits = 0; // หน่วยกิตที่ใช้คำนวณ GPA
+            
+            const rows = document.querySelectorAll('#gradeTable tbody tr');
+            
+            rows.forEach(row => {
+                const subjectCode = row.cells[0].textContent;
+                const creditCell = row.cells[2];
+                const gradeSelect = row.querySelector('.grade-select');
+                
+                const credits = parseInt(creditCell.textContent);
+                const gradeValue = gradeSelect.value;
+                const gradeText = gradeSelect.options[gradeSelect.selectedIndex].text;
+                
+                // เพิ่มหน่วยกิตทั้งหมด (CA)
+                totalCredits += credits;
+                
+                // ตรวจสอบว่าวิชานี้เป็นรหัส 90 หรือไม่
+                const isSubject90 = subjectCode.startsWith('90');
+                
+                if (isSubject90) {
+                    // วิชารหัส 90 ใช้ระบบ S/U เท่านั้น
+                    if (gradeValue === 'S') {
+                        passedCredits += credits;
+                    } else if (gradeValue === 'U' || gradeValue === 'I') {
+                        deficitCredits += credits;
+                    }
+                    // S/U/I/W ไม่นำไปคำนวณเกรดเฉลี่ย
+                } else {
+                    // วิชาปกติ
+                    if (gradeValue === '' || gradeValue === 'I' || gradeValue === 'W') {
+                        // ไม่นำไปคำนวณเกรดเฉลี่ย
+                        if (gradeValue === 'I') {
+                            deficitCredits += credits;
+                        }
+                    } else {
+                        // นำไปคำนวณเกรดเฉลี่ย
+                        const gradePoint = parseFloat(gradeValue);
+                        totalGradePoints += gradePoint * credits;
+                        totalCalculatedCredits += credits;
+                        
+                        // ตรวจสอบว่าผ่านหรือไม่ (เกรด F คือไม่ผ่าน)
+                        if (gradePoint > 0) {
+                            passedCredits += credits;
+                        } else {
+                            deficitCredits += credits;
+                        }
+                    }
+                }
+            });
+            
+            // คำนวณ GPA
+            let gpa = 0;
+            if (totalCalculatedCredits > 0) {
+                gpa = totalGradePoints / totalCalculatedCredits;
+            }
+            
+            // แสดงผล
+            document.getElementById('ca').textContent = totalCredits;
+            document.getElementById('cp').textContent = passedCredits;
+            document.getElementById('cd').textContent = deficitCredits;
+            document.getElementById('gp').textContent = totalGradePoints.toFixed(2);
+            document.getElementById('gpa').textContent = gpa.toFixed(2);
+        }
+    </script>
+</body>
+</html>
