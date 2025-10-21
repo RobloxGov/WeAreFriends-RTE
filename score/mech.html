@@ -228,6 +228,15 @@
             border-radius: 4px;
         }
         
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            color: #856404;
+        }
+        
         footer {
             text-align: center;
             margin-top: 40px;
@@ -260,6 +269,9 @@
                 <p><strong>คะแนนสอบเต็ม 45 คะแนน</strong></p>
                 <p>เลือกระดับความยากเพื่อปรับเกณฑ์การให้เกรดตามมาตรฐานกลุ่ม</p>
             </div>
+            <div class="warning">
+                <p><strong>หมายเหตุ:</strong> คะแนนรวมส่วนใหญ่จะอยู่ระหว่าง 70-75 คะแนน</p>
+            </div>
             <form id="gradeForm">
                 <div class="form-group">
                     <label for="studentId">รหัสนักศึกษา</label>
@@ -274,9 +286,9 @@
                 <div class="form-group">
                     <label>เลือกระดับความยากของข้อสอบ</label>
                     <div class="difficulty-selector">
-                        <div class="difficulty-btn" data-level="easy">ทำได้ 25% (+25%)</div>
-                        <div class="difficulty-btn active" data-level="normal">ทำได้ 50% (+50%)</div>
-                        <div class="difficulty-btn" data-level="hard">ทำได้ 75% (+75%)</div>
+                        <div class="difficulty-btn" data-level="easy">ง่าย (+25%)</div>
+                        <div class="difficulty-btn active" data-level="normal">ปกติ (+50%)</div>
+                        <div class="difficulty-btn" data-level="hard">ยาก (+75%)</div>
                     </div>
                 </div>
                 
@@ -354,13 +366,29 @@
         // ตั้งค่าระดับความยากเริ่มต้น
         let currentDifficulty = 'normal';
         
+        // ฟังก์ชันปรับคะแนนให้อยู่ในช่วงที่เหมาะสม (70-75)
+        function normalizeScore(score) {
+            // คะแนนรวมส่วนใหญ่ควรอยู่ระหว่าง 70-75
+            const targetMin = 70;
+            const targetMax = 75;
+            
+            // ถ้าคะแนนต่ำกว่า 0 ให้ปรับเป็น 0
+            if (score < 0) return 0;
+            
+            // ถ้าคะแนนสูงเกินไป ให้จำกัดไม่ให้เกิน 85
+            if (score > 85) return 85;
+            
+            return score;
+        }
+        
         // ฟังก์ชันคำนวณเกณฑ์คะแนนตามระดับความยาก
         function calculateGradeCriteria(difficulty) {
             const bonusPercentage = difficultyBonus[difficulty];
             const bonusPoints = examMaxScore * bonusPercentage;
             const newMean = baseMean + bonusPoints;
             
-            return {
+            // ปรับเกณฑ์คะแนนให้เหมาะสม
+            const criteria = {
                 'A': newMean + 1.5 * sd,
                 'B+': newMean + 1 * sd,
                 'B': newMean + 0.5 * sd,
@@ -369,6 +397,13 @@
                 'D': newMean - 1 * sd,
                 'F': newMean - 1.5 * sd
             };
+            
+            // ปรับเกณฑ์ให้เหมาะสมกับช่วงคะแนน 70-75
+            Object.keys(criteria).forEach(grade => {
+                criteria[grade] = normalizeScore(criteria[grade]);
+            });
+            
+            return criteria;
         }
         
         // ฟังก์ชันแสดงเกณฑ์คะแนนในตาราง
@@ -392,17 +427,19 @@
         
         // ฟังก์ชันคำนวณเกรดจากคะแนนรวม
         function calculateGrade(totalScore, criteria) {
-            if (totalScore >= criteria['A']) {
+            const normalizedScore = normalizeScore(totalScore);
+            
+            if (normalizedScore >= criteria['A']) {
                 return 'A';
-            } else if (totalScore >= criteria['B+']) {
+            } else if (normalizedScore >= criteria['B+']) {
                 return 'B+';
-            } else if (totalScore >= criteria['B']) {
+            } else if (normalizedScore >= criteria['B']) {
                 return 'B';
-            } else if (totalScore >= criteria['C+']) {
+            } else if (normalizedScore >= criteria['C+']) {
                 return 'C+';
-            } else if (totalScore >= criteria['C']) {
+            } else if (normalizedScore >= criteria['C']) {
                 return 'C';
-            } else if (totalScore >= criteria['D']) {
+            } else if (normalizedScore >= criteria['D']) {
                 return 'D';
             } else {
                 return 'F';
@@ -472,11 +509,11 @@
                     `${student.name} (รหัส ${studentId})`;
                 document.getElementById('finalGrade').textContent = grade;
                 document.getElementById('totalScore').textContent = 
-                    `คะแนนรวม: ${totalScore.toFixed(2)} คะแนน`;
+                    `คะแนนรวม: ${normalizeScore(totalScore).toFixed(2)} คะแนน`;
                 
                 document.getElementById('assignmentScore').textContent = student.assignmentScore.toFixed(2);
                 document.getElementById('examScoreValue').textContent = examScoreInput.toFixed(2);
-                document.getElementById('totalScoreValue').textContent = totalScore.toFixed(2);
+                document.getElementById('totalScoreValue').textContent = normalizeScore(totalScore).toFixed(2);
                 
                 // แสดงเกณฑ์คะแนน
                 displayGradeCriteria(criteria);
