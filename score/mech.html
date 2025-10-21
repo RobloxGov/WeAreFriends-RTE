@@ -237,6 +237,15 @@
             color: #856404;
         }
         
+        .question-info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            color: #0c5460;
+        }
+        
         footer {
             text-align: center;
             margin-top: 40px;
@@ -266,12 +275,12 @@
         <div class="card">
             <h2>กรอกข้อมูลเพื่อคำนวณเกรด</h2>
             <div class="info-box">
-                <p><strong>คะแนนสอบเต็ม 45 คะแนน</strong></p>
+                <p><strong>ข้อสอบมี 24 ข้อ รวม 45 คะแนน</strong></p>
                 <p>เลือกระดับความยากเพื่อปรับเกณฑ์การให้เกรดตามมาตรฐานกลุ่ม</p>
             </div>
-            <div class="warning">
-                <p><strong>หมายเหตุ:</strong> คะแนนรวมส่วนใหญ่จะอยู่ระหว่าง 70-75 คะแนน</p>
-            </div>
+            <!-- <div class="question-info">
+                <p><strong>คะแนนสอบส่วนใหญ่จะอยู่ที่ 10-14 ข้อ</strong> (ประมาณ 19-26 คะแนน)</p>
+            </div> -->
             <form id="gradeForm">
                 <div class="form-group">
                     <label for="studentId">รหัสนักศึกษา</label>
@@ -279,8 +288,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="examScore">คะแนนสอบ (เต็ม 45 คะแนน)</label>
-                    <input type="number" id="examScore" min="0" max="45" step="0.5" placeholder="0-45" required>
+                    <label for="correctQuestions">จำนวนข้อที่ทำได้ (0-24 ข้อ)</label>
+                    <input type="number" id="correctQuestions" min="0" max="24" placeholder="0-24" required>
+                    <small>ข้อละ 1.875 คะแนน (45/24)</small>
                 </div>
                 
                 <div class="form-group">
@@ -326,6 +336,7 @@
                     <p id="studentInfo"></p>
                     <div class="grade-display" id="finalGrade"></div>
                     <p id="totalScore"></p>
+                    <p id="examDetails"></p>
                 </div>
                 
                 <div class="stats">
@@ -354,7 +365,9 @@
         // ข้อมูลสถิติพื้นฐาน
         const baseMean = 42.3585;
         const sd = 17.3500;
+        const totalQuestions = 24;
         const examMaxScore = 45;
+        const scorePerQuestion = examMaxScore / totalQuestions; // 1.875 คะแนนต่อข้อ
         
         // ข้อมูลเปอร์เซ็นต์เพิ่มตามระดับความยาก
         const difficultyBonus = {
@@ -366,10 +379,15 @@
         // ตั้งค่าระดับความยากเริ่มต้น
         let currentDifficulty = 'normal';
         
-        // ฟังก์ชันปรับคะแนนให้อยู่ในช่วงที่เหมาะสม (70-75)
+        // ฟังก์ชันคำนวณคะแนนสอบจากจำนวนข้อที่ทำได้
+        function calculateExamScore(correctQuestions) {
+            return correctQuestions * scorePerQuestion;
+        }
+        
+        // ฟังก์ชันปรับคะแนนให้อยู่ในช่วงที่เหมาะสม
         function normalizeScore(score) {
-            // คะแนนรวมส่วนใหญ่ควรอยู่ระหว่าง 70-75
-            const targetMin = 70;
+            // คะแนนรวมส่วนใหญ่ควรอยู่ระหว่าง 60-75
+            const targetMin = 60;
             const targetMax = 75;
             
             // ถ้าคะแนนต่ำกว่า 0 ให้ปรับเป็น 0
@@ -398,7 +416,7 @@
                 'F': newMean - 1.5 * sd
             };
             
-            // ปรับเกณฑ์ให้เหมาะสมกับช่วงคะแนน 70-75
+            // ปรับเกณฑ์ให้เหมาะสมกับช่วงคะแนน
             Object.keys(criteria).forEach(grade => {
                 criteria[grade] = normalizeScore(criteria[grade]);
             });
@@ -464,11 +482,11 @@
             e.preventDefault();
             
             const studentId = document.getElementById('studentId').value;
-            const examScoreInput = parseFloat(document.getElementById('examScore').value);
+            const correctQuestions = parseInt(document.getElementById('correctQuestions').value);
             
-            // ตรวจสอบคะแนนสอบ
-            if (examScoreInput > examMaxScore) {
-                alert(`คะแนนสอบต้องไม่เกิน ${examMaxScore} คะแนน`);
+            // ตรวจสอบจำนวนข้อ
+            if (correctQuestions > totalQuestions) {
+                alert(`จำนวนข้อที่ทำได้ต้องไม่เกิน ${totalQuestions} ข้อ`);
                 return;
             }
             
@@ -495,11 +513,14 @@
                     return;
                 }
                 
+                // คำนวณคะแนนสอบจากจำนวนข้อที่ทำได้
+                const examScore = calculateExamScore(correctQuestions);
+                
                 // คำนวณเกณฑ์คะแนนตามระดับความยาก
                 const criteria = calculateGradeCriteria(currentDifficulty);
                 
                 // คำนวณคะแนนรวม (คะแนนเก็บ + คะแนนสอบ)
-                const totalScore = student.assignmentScore + examScoreInput;
+                const totalScore = student.assignmentScore + examScore;
                 
                 // คำนวณเกรด
                 const grade = calculateGrade(totalScore, criteria);
@@ -510,9 +531,11 @@
                 document.getElementById('finalGrade').textContent = grade;
                 document.getElementById('totalScore').textContent = 
                     `คะแนนรวม: ${normalizeScore(totalScore).toFixed(2)} คะแนน`;
+                document.getElementById('examDetails').textContent = 
+                    `ทำได้ ${correctQuestions} ข้อ จาก 24 ข้อ (${examScore.toFixed(2)} คะแนน)`;
                 
                 document.getElementById('assignmentScore').textContent = student.assignmentScore.toFixed(2);
-                document.getElementById('examScoreValue').textContent = examScoreInput.toFixed(2);
+                document.getElementById('examScoreValue').textContent = examScore.toFixed(2);
                 document.getElementById('totalScoreValue').textContent = normalizeScore(totalScore).toFixed(2);
                 
                 // แสดงเกณฑ์คะแนน
