@@ -6,8 +6,10 @@ window.addEventListener("DOMContentLoaded", () => {
     const headerHTML = `
         <div class="header-container">
             <div class="logo-container">
-                <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
-                <img src="/img/rte13.png" alt="RTE13 Logo">
+                <a href="/">
+                    <img src="/img/KMITL_Sublogo.svg.png" alt="KMITL Logo">
+                    <img src="/img/rte13.png" alt="RTE13 Logo">
+                </a>
             </div>
             
             <nav class="nav-desktop">
