@@ -15,8 +15,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     <li>
                         <a href="#">เกี่ยวกับ</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">สมาชิก</a></li>
-                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="/member/">สมาชิก</a></li>
+                            <li><a href="https://regis.reg.kmitl.ac.th/#/teach_table_selector">ตารางเรียน/สอบ</a></li>
                             <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
                             <li><a href="https://www.reg.kmitl.ac.th/educalendar/2568/th-2.pdf">ปฏิทิน</a></li>
                         </ul>
@@ -24,8 +24,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     <li>
                         <a href="#">สำหรับนักศึกษา</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">ลงทะเบียนเรียน</a></li>
-                            <li><a href="#">ตารางเรียน/สอบ</a></li>
+                            <li><a href="https://regis.reg.kmitl.ac.th/#/information">ลงทะเบียนเรียน</a></li>
+                            <li><a href="https://regis.reg.kmitl.ac.th/#/teach_table_selector">ตารางเรียน/สอบ</a></li>
                             <li><a href="https://www.reg.kmitl.ac.th/">REG KMITL</a></li>
                         </ul>
                     </li>
@@ -60,8 +60,8 @@ window.addEventListener("DOMContentLoaded", () => {
             <li>
                 <button class="mobile-dropdown-btn">เกี่ยวกับ</button>
                 <ul class="mobile-dropdown">
-                    <li><a href="#">สมาชิก</a></li>
-                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="/member/">สมาชิก</a></li>
+                    <li><a href="https://regis.reg.kmitl.ac.th/#/teach_table_selector">ตารางเรียน/สอบ</a></li>
                     <li><a href="/file/เล่มหลักสูตร.pdf">หลักสูตร</a></li>
                     <li><a href="https://www.reg.kmitl.ac.th/educalendar/2568/th-2.pdf">ปฏิทิน</a></li>
                 </ul>
@@ -69,8 +69,8 @@ window.addEventListener("DOMContentLoaded", () => {
             <li>
                 <button class="mobile-dropdown-btn">สำหรับนักศึกษา</button>
                 <ul class="mobile-dropdown">
-                    <li><a href="#">ลงทะเบียนเรียน</a></li>
-                    <li><a href="#">ตารางเรียน/สอบ</a></li>
+                    <li><a href="https://regis.reg.kmitl.ac.th/#/information">ลงทะเบียนเรียน</a></li>
+                    <li><a href="https://regis.reg.kmitl.ac.th/#/teach_table_selector">ตารางเรียน/สอบ</a></li>
                     <li><a href="https://www.reg.kmitl.ac.th/">REG KMITL</a></li>
                 </ul>
             </li>
