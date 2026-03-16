@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบคำนวณเกรดอิงกลุ่มมาตรฐาน</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <header>
+            <div class="container">
+                <div class="flex">
+                    <div class="logo">
+                        <img src="https://git.kmitl.ac.th/uploads/-/system/appearance/logo/1/KMITL_Sublogo.svg" alt="">
+                    </div>
+                    <div class="menu">
+                        <p>ระบบคำนวณเกรดอิงกลุ่มมาตรฐานต่ำ</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <div class="dashboard-container">
+                <h2>กรอกข้อมูลเพื่อคำนวณเกรด</h2>
+                <form id="gradeForm">
+                    <div class="form-group">
+                        <label for="studentId">รหัสนักศึกษา</label>
+                        <input type="text" id="studentId" placeholder="กรอกรหัสนักศึกษา" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h4>ข้อที่ทำได้</h4>
+                        <div class="score-item">
+                            <label for="examScore_1a">ข้อ 1 ก (4 คะแนน)</label>
+                            <input type="checkbox" id="examScore_1a" name="examScore_1a" value="4">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_1b">ข้อ 1 ข (3 คะแนน)</label>
+                            <input type="checkbox" id="examScore_1b" name="examScore_1b" value="3">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_1c">ข้อ 1 ค (3 คะแนน)</label>
+                            <input type="checkbox" id="examScore_1c" name="examScore_1c" value="3">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_2a">ข้อ 2 ก (5 คะแนน)</label>
+                            <input type="checkbox" id="examScore_2a" name="examScore_2a" value="5">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_2b">ข้อ 2 ข (5 คะแนน)</label>
+                            <input type="checkbox" id="examScore_2b" name="examScore_2b" value="5">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_3">ข้อ 3 (10 คะแนน)</label>
+                            <input type="checkbox" id="examScore_3" name="examScore_3" value="10">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_4a">ข้อ 4 ก (4 คะแนน)</label>
+                            <input type="checkbox" id="examScore_4a" name="examScore_4a" value="4">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_4b">ข้อ 4 ข (2 คะแนน)</label>
+                            <input type="checkbox" id="examScore_4b" name="examScore_4b" value="2">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_4c">ข้อ 4 ค (2 คะแนน)</label>
+                            <input type="checkbox" id="examScore_4c" name="examScore_4c" value="2">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_4d">ข้อ 4 ง (2 คะแนน)</label>
+                            <input type="checkbox" id="examScore_4d" name="examScore_4d" value="2">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_5a">ข้อ 5 ก (6 คะแนน)</label>
+                            <input type="checkbox" id="examScore_5a" name="examScore_5a" value="6">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_5b">ข้อ 5 ข (2 คะแนน)</label>
+                            <input type="checkbox" id="examScore_5b" name="examScore_5b" value="2">
+                        </div>
+
+                        <div class="score-item">
+                            <label for="examScore_5c">ข้อ 5 ค (2 คะแนน)</label>
+                            <input type="checkbox" id="examScore_5c" name="examScore_5c" value="2">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>เลือกระดับความยาก</label>
+                        <div class="difficulty-selector">
+                            <div class="difficulty-btn" data-level="easy">ง่าย (+17.5)</div>
+                            <div class="difficulty-btn active" data-level="normal">ปกติ (+21)</div>
+                            <div class="difficulty-btn" data-level="hard">ยาก (+24.5)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="end">
+                        <button type="submit" class="btn" id="submitBtn">คำนวณเกรด</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="loading" id="loading" style="display: none;">
+                <p>กำลังโหลดข้อมูล...</p>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <div class="card">
+                    <h2>เกณฑ์การให้เกรด</h2>
+                    <table class="grade-table" id="gradeTable">
+                        <thead>
+                            <tr>
+                                <th>เกรด</th>
+                                <th>A</th>
+                                <th>B+</th>
+                                <th>B</th>
+                                <th>C+</th>
+                                <th>C</th>
+                                <th>D</th>
+                                <th>F</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gradeCriteriaBody">
+                            <!-- เกณฑ์คะแนนจะถูกคำนวณและแสดงที่นี่ -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="user-result">
+                        <h3>ผลการคำนวณเกรด</h3>
+                        <p id="studentInfo"></p>
+                        <div class="grade-display" id="finalGrade"></div>
+                        <p id="totalScore"></p>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-box">
+                            <div class="stat-label">คะแนนเก็บ</div>
+                            <div class="stat-value" id="assignmentScore">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">คะแนนสอบ</div>
+                            <div class="stat-value" id="examScoreValue">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">คะแนนรวม</div>
+                            <div class="stat-value" id="totalScoreValue">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>ระบบคำนวณเกรดอิงกลุ่มมาตรฐาน - พัฒนาโดยวิศวกรรมขนส่งทางราง</p>
+        </footer>
+
+    <script src="ss.js"></script>
+</body>
+</html>
